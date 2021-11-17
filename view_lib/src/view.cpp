@@ -3,29 +3,30 @@
 //пробую использовать сигналы и слоты
 
 View::View() {
+  presenter = nullptr;
 
   QObject::connect(&mainWindow, &MainWindow::onButtonAddTask, this, &View::onButtonShowTask);
-
-  //QObject::connect(this, &View::showUser, &mainWindow, &MainWindow::showUserData);
-  //QObject::connect(this, SIGNAL(showUser(User)), &mainWindow, SLOT(showUserData(User)));
 }
 
 View::~View() { delete presenter; }
 
 void View::setPresenter(IPresenter& presenter) {}
 
-void View::showUserData(User user) {
-  mainWindow.showUserData(user);
+void View::showUserData(const User& user) {
+  mainWindow.setUser(user);
+  mainWindow.showUserData();
 }
-void View::showUserTasksData(std::vector<Task> userTasks) {}
-void View::showTaskData(Task task) {}
-void View::showMessageData(Message message) {}
+void View::showUserTasksData(const std::vector<Task>& userTasks) {}
+void View::showTaskData(const Task& task) {}
+void View::showMessagesData(const std::vector<Message>& message) {}
 
+void View::onButtonLogin() {}
 void View::onButtonShowTask() {
   User user_(1, "my_name");
-  //emit showUser(user);
   showUserData(user_);
 
   taskCreateDialog.setModal(true);
   taskCreateDialog.exec();
 }
+void View::onButtonCreateTask() {}
+void View::onButtonCreateMessage() {}

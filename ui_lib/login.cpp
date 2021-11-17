@@ -13,8 +13,18 @@ Login::~Login()
     delete ui;
 }
 
+void Login::setUser(const User& user_)
+{
+  user = user_;
+}
+
+User& Login::getUser()
+{
+  return user;
+}
+
 void Login::on_buttonLogin_clicked()
 {
-  std::string name = ui->lineEdit->text().toStdString();
-  emit onButtonLogin(name);
+  user.setName(ui->lineEdit->text().toStdString());
+  emit onButtonLogin();
 }

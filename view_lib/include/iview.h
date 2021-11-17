@@ -6,10 +6,10 @@
 
 class IView {
 public:
-  virtual void showUserData(User user) = 0;
-  virtual void showUserTasksData(std::vector<Task> userTasks) = 0;
-  virtual void showTaskData(Task task) = 0;
-  virtual void showMessageData(Message message) = 0;
+  virtual void showUserData(const User& user) = 0;
+  virtual void showUserTasksData(const std::vector<Task>& userTasks) = 0;
+  virtual void showTaskData(const Task& task) = 0;
+  virtual void showMessagesData(const std::vector<Message>& message) = 0;
 };
 
 #endif // TASKMESSENGER_IVIEW_H

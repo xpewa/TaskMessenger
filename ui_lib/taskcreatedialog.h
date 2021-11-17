@@ -17,16 +17,20 @@ public:
     ~TaskCreateDialog();
 
     void setUser(const User& user_);
+    User& getUser();
+    void setTask(const Task& task_);
+    Task& getTask();
 
 private slots:
     void on_buttonCreateTask_clicked();
 
 signals:
-    void onButtonCreateTask(Task task);
+    void onButtonCreateTask();
 
 private:
     Ui::TaskCreateDialog *ui;
     User user;
+    Task task;
 };
 
 #endif // TASKCREATEDIALOG_H

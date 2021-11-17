@@ -18,8 +18,22 @@ void TaskCreateDialog::setUser(const User& user_)
   user = user_;
 }
 
+User& TaskCreateDialog::getUser()
+{
+  return user;
+}
+void TaskCreateDialog::setTask(const Task& task_)
+{
+  task = task_;
+}
+Task& TaskCreateDialog::getTask()
+{
+  return task;
+}
+
 void TaskCreateDialog::on_buttonCreateTask_clicked()
 {
-  Task task;
-  emit onButtonCreateTask(task);
+  Task new_task;
+  task = new_task;
+  emit onButtonCreateTask();
 }

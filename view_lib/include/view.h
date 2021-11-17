@@ -17,21 +17,20 @@ class View : public QObject, public IView
 
 public:
   View();
-  View(IPresenter* presenter) : presenter(presenter) {}
   ~View();
 
   void setPresenter(IPresenter& presenter);
 
-  void showUserData(User user) override;
-  void showUserTasksData(std::vector<Task> userTasks) override;
-  void showTaskData(Task task) override;
-  void showMessageData(Message message) override;
+  void showUserData(const User& user) override;
+  void showUserTasksData(const std::vector<Task>& userTasks) override;
+  void showTaskData(const Task& task) override;
+  void showMessagesData(const std::vector<Message>& message) override;
 
 public slots:
-  void onButtonLogin(std::string name);
+  void onButtonLogin();
   void onButtonShowTask();
-  void onButtonCreateTask(Task task);
-  void onButtonCreateMessage(Message message);
+  void onButtonCreateTask();
+  void onButtonCreateMessage();
 
 private:
   IPresenter* presenter;

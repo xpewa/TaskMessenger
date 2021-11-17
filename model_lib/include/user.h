@@ -19,7 +19,21 @@ private:
   std::string name;
 };
 
-class Task {};
-class Message {};
+//для тестов
+
+class Task {
+public:
+  void setTitle(std::string title_) { title = title_; }
+  std::string getTitle() { return title; }
+private:
+  std::string title;
+};
+class Message {
+public:
+  void setText(std::string text_) { text = text_; }
+  std::string getText() { return text; }
+private:
+  std::string text;
+};
 
 #endif // TASKMESSENGER_USER_H

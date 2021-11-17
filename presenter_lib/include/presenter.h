@@ -7,12 +7,12 @@
 
 class Presenter : public IPresenter {
 public:
-  Presenter() = default;
+  Presenter() : view(nullptr), client(nullptr) {}
   Presenter(IView* view, IClient* client) : view(view), client(client) {}
   ~Presenter() { delete view; delete client; }
 
-  void setView(IView* view);
-  void setClient(IClient* client);
+  void setView(IView* view_);
+  void setClient(IClient* client_);
 
   void Authorize(std::string name) override;
   void GetTaskForUser(User user) override;

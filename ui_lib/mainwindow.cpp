@@ -15,14 +15,33 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::setUser(const User& user_)
+{
+  user = user_;
+}
+
+void MainWindow::setTasks(const std::vector<Task>& tasks_)
+{
+  tasks = tasks_;
+}
+User& MainWindow::getUser()
+{
+  return user;
+}
+std::vector<Task>& MainWindow::getTasks()
+{
+  return tasks;
+}
+
 void MainWindow::on_buttonAddTask_clicked()
 {
     emit onButtonAddTask();
 }
 
-void MainWindow::showUserData(const User& new_user) {
-  user = new_user;
+void MainWindow::showUserData() {
   ui->label->setText(QString::fromStdString(user.getName()));
 }
+
+void MainWindow::updateTasks() {}
 
 
