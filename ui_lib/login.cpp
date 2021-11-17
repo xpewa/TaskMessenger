@@ -15,5 +15,6 @@ Login::~Login()
 
 void Login::on_buttonLogin_clicked()
 {
-
+  std::string name = ui->lineEdit->text().toStdString();
+  emit onButtonLogin(name);
 }

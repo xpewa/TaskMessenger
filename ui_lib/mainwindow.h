@@ -16,16 +16,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void showUserData(User user);
+    void showUserData(const User& user);
+    void updateTasks(const std::vector<Task>& task);
 
 public slots:
     void on_buttonAddTask_clicked();
-    //void showUserData(User user);
 
 signals:
     void onButtonAddTask();
 
 private:
     Ui::MainWindow *ui;
+    User user;
+    std::vector<Task> tasks;
 };
 #endif // MAINWINDOW_H

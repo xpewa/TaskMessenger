@@ -28,13 +28,10 @@ public:
   void showMessageData(Message message) override;
 
 public slots:
-  void onButtonLogin();
+  void onButtonLogin(std::string name);
   void onButtonShowTask();
-  void onButtonCreateTask();
-  void onButtonCreateMessage();
-
-//signals:
-//  void showUser(User user);
+  void onButtonCreateTask(Task task);
+  void onButtonCreateMessage(Message message);
 
 private:
   IPresenter* presenter;

@@ -18,6 +18,9 @@ public:
 private slots:
     void on_buttonLogin_clicked();
 
+signals:
+    void onButtonLogin(std::string name);
+
 private:
     Ui::Login *ui;
 };
