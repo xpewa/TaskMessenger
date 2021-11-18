@@ -6,31 +6,31 @@
 #include <algorithm>
 
 
-mysqlx::Table createTable(mysqlx::Session &session, const wstring &name, const wstring &command) {
-    wstring quoted_name = L"`"
-                          + wstring(session.getDefaultSchemaName())
-                          + L"`.`" + wstring(name) + L"`";
-    session.sql(L"DROP TABLE IF EXISTS" + quoted_name).execute();
+//mysqlx::Table createTable(mysqlx::Session &session, const wstring &name, const wstring &command) {
+//    wstring quoted_name = L"`"
+//                          + wstring(session.getDefaultSchemaName())
+//                          + L"`.`" + wstring(name) + L"`";
+//    session.sql(L"DROP TABLE IF EXISTS" + quoted_name).execute();
+//
+//    wstring create = L"CREATE TABLE ";
+//    create += quoted_name;
+//    create += command;
+//
+//    session.sql(create).execute();
+//    return session.getDefaultSchema().getTable(name);
+//}
 
-    wstring create = L"CREATE TABLE ";
-    create += quoted_name;
-    create += command;
-
-    session.sql(create).execute();
-    return session.getDefaultSchema().getTable(name);
-}
-
-DatabaseManager::DatabaseManager() {
-    vector<string> tablenames = schema.getTableNames();
-    if (find(tablenames.begin(), tablenames.end(), "user") == tablenames.end()) {
-        user = createTable(session, L"test",
-                           L"(id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20));");
-        task = createTable(session, L"test",
-                           L"(id INT PRIMARY KEY AUTO_INCREMENT, head VARCHAR(100) NOT NULL, body VARCHAR(500), completion BOOL DEFAULT 0, assigner_id INT NOT NULL, FOREIGN KEY (assigner_id) REFERENCES user(id), executor_id INT NOT NULL, FOREIGN KEY (executor_id) REFERENCES user(id));");
-        message = createTable(session, L"test",
-                              L"(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(100) NOT NULL, task_id INT NOT NULL, FOREIGN KEY (task_id) REFERENCES task(id), from_id INT NOT NULL, FOREIGN KEY (from_id) REFERENCES user(id));");
-    }
-}
+//DatabaseManager::DatabaseManager() {
+//    vector<string> tablenames = schema.getTableNames();
+//    if (find(tablenames.begin(), tablenames.end(), "user") == tablenames.end()) {
+//        user = createTable(session, L"test",
+//                           L"(id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20));");
+//        task = createTable(session, L"test",
+//                           L"(id INT PRIMARY KEY AUTO_INCREMENT, head VARCHAR(100) NOT NULL, body VARCHAR(500), completion BOOL DEFAULT 0, assigner_id INT NOT NULL, FOREIGN KEY (assigner_id) REFERENCES user(id), executor_id INT NOT NULL, FOREIGN KEY (executor_id) REFERENCES user(id));");
+//        message = createTable(session, L"test",
+//                              L"(id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(100) NOT NULL, task_id INT NOT NULL, FOREIGN KEY (task_id) REFERENCES task(id), from_id INT NOT NULL, FOREIGN KEY (from_id) REFERENCES user(id));");
+//    }
+//}
 
 
 //User DatabaseManager::add_user() {
@@ -44,6 +44,13 @@ bool DatabaseManager::update_user_data(User user_) {
 User DatabaseManager::get_user(int id) {
     string res = user.select("login").where("id = :id").bind("id", id).execute().fetchOne()[0].get<string>();
     return User(id, res);
+}
+
+User DatabaseManager::search_user(string name_) {
+    mysqlx::Row row = user.select("id", "login").where("login = :login").bind("login", name_).execute().fetchOne();
+    int id = row[0].get<int>();
+    string name = row[1].get<string>();
+    return User(id, name);
 }
 
 bool DatabaseManager::add_task(Task task_) {

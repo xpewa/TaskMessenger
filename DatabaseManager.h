@@ -76,13 +76,15 @@ private:
     mysqlx::Table task = schema.getTable("task", true);
     mysqlx::Table message = schema.getTable("message", true);
 public:
-    DatabaseManager();
+//    DatabaseManager();
 
 //    bool create_tables();
 //    User add_user();
     bool update_user_data(User user);
 
     User get_user(int id);
+
+    User search_user(string name_);
 
     bool add_task(Task task);
 
