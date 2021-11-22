@@ -16,6 +16,8 @@ int main(int argc, char *argv[])
     Presenter presenter(&view, &client);
     view.setPresenter(presenter);
     view.mainWindow.showMaximized();
+    //view.login.show();
+    //view.taskDialog.show();
 
     return a.exec();
 }

@@ -10,6 +10,8 @@ public:
   virtual void showUserTasksData(const std::vector<Task>& userTasks) = 0;
   virtual void showTaskData(const Task& task) = 0;
   virtual void showMessagesData(const std::vector<Message>& message) = 0;
+
+  virtual ~IView() {}
 };
 
 #endif // TASKMESSENGER_IVIEW_H

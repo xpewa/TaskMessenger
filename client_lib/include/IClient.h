@@ -12,6 +12,8 @@ public:
   virtual std::vector<Message> GetMessageForTask(Task task) = 0;
   virtual void AddNewTask(Task task) = 0;
   virtual void AddNewMessage(Message message) = 0;
+
+  virtual ~IClient() {}
 };
 
 #endif // TASKMESSENGER_ICLIENT_H
