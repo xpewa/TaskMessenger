@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "user.h"
+#include "task.h"
+#include "message.h"
 
 namespace Ui {
 class TaskDialog;

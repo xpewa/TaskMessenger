@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    ClientBoostBeast client;
+    ClientBoostAsio client;
     View view;
     Presenter presenter(&view, &client);
     view.setPresenter(presenter);

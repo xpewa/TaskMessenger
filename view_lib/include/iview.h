@@ -2,6 +2,8 @@
 #define TASKMESSENGER_IVIEW_H
 
 #include "user.h"
+#include "task.h"
+#include "message.h"
 #include <vector>
 
 class IView {

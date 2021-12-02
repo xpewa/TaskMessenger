@@ -3,6 +3,8 @@
 
 #include <string>
 #include "user.h"
+#include "task.h"
+#include "message.h"
 
 class IPresenter {
 public:

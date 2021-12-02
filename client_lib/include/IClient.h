@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include "user.h"
+#include "task.h"
+#include "message.h"
 
 class IClient {
 public:

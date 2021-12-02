@@ -16,7 +16,10 @@ void View::showUserData(const User& user) {
   mainWindow.setUser(user);
   mainWindow.showUserData();
 }
-void View::showUserTasksData(const std::vector<Task>& userTasks) {}
+void View::showUserTasksData(const std::vector<Task>& userTasks) {
+  mainWindow.setTasks(userTasks);
+  mainWindow.showTasks();
+}
 void View::showTaskData(const Task& task) {}
 void View::showMessagesData(const std::vector<Message>& message) {}
 

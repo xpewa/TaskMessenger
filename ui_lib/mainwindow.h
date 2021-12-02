@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "user.h"
+#include "task.h"
+#include "message.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,7 +24,7 @@ public:
     std::vector<Task>& getTasks();
 
     void showUserData();
-    void updateTasks();
+    void showTasks();
 
 public slots:
     void on_buttonAddTask_clicked();
@@ -31,6 +33,8 @@ signals:
     void onButtonAddTask();
 
 private:
+    void addTask(Task& task);
+
     Ui::MainWindow *ui;
     User user;
     std::vector<Task> tasks;
