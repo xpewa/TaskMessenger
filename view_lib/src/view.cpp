@@ -1,11 +1,13 @@
 #include "view.h"
 
-//пробую использовать сигналы и слоты
 
 View::View() {
   presenter = nullptr;
 
-  QObject::connect(&mainWindow, &MainWindow::onButtonAddTask, this, &View::onButtonShowTask);
+  QObject::connect(&mainWindow, &MainWindow::onButtonAddTask, this, &View::onButtonCreateTask);
+  QObject::connect(&mainWindow, &MainWindow::onButtonShowTask, this, &View::onButtonShowTask);
+  QObject::connect(&login, &Login::onButtonLogin, this, &View::onButtonLogin);
+  QObject::connect(&taskDialog, &TaskDialog::onButtonSendMessage, this, &View::onButtonCreateMessage);
 }
 
 View::~View() { delete presenter; }
@@ -24,12 +26,20 @@ void View::showTaskData(const Task& task) {}
 void View::showMessagesData(const std::vector<Message>& message) {}
 
 void View::onButtonLogin() {}
-void View::onButtonShowTask() {
+void View::onButtonShowTask(Task &task) {
+  taskDialog.setUser(mainWindow.getUser());
+  taskDialog.setTask(task);
+  taskDialog.updateTaskData(task);
+  //presenter->GetMessageForTask(task);
+
+  taskDialog.setModal(true);
+  taskDialog.exec();
+}
+void View::onButtonCreateTask() {
   User user_(1, "my_name");
   showUserData(user_);
 
   taskCreateDialog.setModal(true);
   taskCreateDialog.exec();
 }
-void View::onButtonCreateTask() {}
 void View::onButtonCreateMessage() {}

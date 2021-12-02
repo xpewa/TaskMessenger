@@ -6,6 +6,8 @@
 #include "task.h"
 #include "message.h"
 
+#include "taskcreatedialog.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -28,9 +30,11 @@ public:
 
 public slots:
     void on_buttonAddTask_clicked();
+    void onButtonShowTask_clicked();
 
 signals:
     void onButtonAddTask();
+    void onButtonShowTask(Task &task);
 
 private:
     void addTask(Task& task);
@@ -38,5 +42,6 @@ private:
     Ui::MainWindow *ui;
     User user;
     std::vector<Task> tasks;
+    std::vector<QPushButton*> open_btn_array;
 };
 #endif // MAINWINDOW_H

@@ -28,7 +28,7 @@ public:
 
 public slots:
   void onButtonLogin();
-  void onButtonShowTask();
+  void onButtonShowTask(Task &task);
   void onButtonCreateTask();
   void onButtonCreateMessage();
 

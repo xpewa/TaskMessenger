@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "taskcreatedialog.h"
+#include "iostream"
+
+#include <QObject>
 
 void MainWindow::addTask(Task& task)
 {
@@ -14,12 +16,14 @@ void MainWindow::addTask(Task& task)
   title->setText(QString::fromStdString(task.getTitle()));
   assigner->setText(QString::fromStdString(task.getAssigner().getName()));
   worker->setText(QString::fromStdString(task.getWorker().getName()));
-  QPushButton* open_btn = new QPushButton("+");
+  size_t i = open_btn_array.size();
+  open_btn_array.push_back(new QPushButton("+"));
+  QObject::connect(open_btn_array[i], &QPushButton::clicked, this, &MainWindow::onButtonShowTask_clicked);
 
   table->setItem(table->rowCount()-1, 0, title);
   table->setItem(table->rowCount()-1, 1, assigner);
   table->setItem(table->rowCount()-1, 2, worker);
-  table->setCellWidget(table->rowCount()-1, 3, open_btn);
+  table->setCellWidget(table->rowCount()-1, 3, open_btn_array[i]);
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -61,6 +65,22 @@ void MainWindow::on_buttonAddTask_clicked()
 {
     emit onButtonAddTask();
 }
+void MainWindow::onButtonShowTask_clicked()
+{
+  QObject* sender = QObject::sender();
+  QPushButton* btn = qobject_cast<QPushButton*>(sender);
+
+  int i;
+  auto iter = std::find(open_btn_array.begin(), open_btn_array.end(), btn);
+  if (iter != open_btn_array.end()) {
+    i = std::distance(open_btn_array.begin(), iter);
+  }
+
+  user.setName(std::to_string(i));
+  showUserData();
+
+  emit onButtonShowTask(tasks[i]);
+}
 
 void MainWindow::showUserData() {
   ui->label->setText(QString::fromStdString(user.getName()));
@@ -80,6 +100,7 @@ void MainWindow::showTasks() {
   QTableWidget* table = ui->tabWidget->findChild<QWidget*>("tab")->findChild<QTableWidget*>("tableTasks");
   table->clear();
   table->setRowCount(0);
+  open_btn_array.clear();
 
   for (int i = 0; i < tasks.size(); ++i) {
     addTask(tasks[i]);
