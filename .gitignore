@@ -1,5 +1,5 @@
 .idea
 cmake-build-debug
-useful.txt
+*.txt
 #main.cpp
 #CMakeLists.txt

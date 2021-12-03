@@ -1,3 +1,0 @@
-drop table message;
-drop table task;
-drop table user;
