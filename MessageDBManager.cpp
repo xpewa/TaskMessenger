@@ -1,7 +1,12 @@
 #include "MessageDBManager.h"
 
 bool MessageDBManager::add_message(Message message_) {
-    message.insert("text", "task_id", "from_id").values(message_.text, message_.task_id, message_.from_id).execute();
+    try{
+        message.insert("text", "task_id", "from_id").values(message_.text, message_.task_id, message_.from_id).execute();
+    } catch (mysqlx::abi2::r0::Error) {
+        return false;
+    }
+    return true;
 }
 
 vector<Message> MessageDBManager::get_messages(int task_id) {

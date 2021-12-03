@@ -1,6 +1,6 @@
 #include "IDBManager.h"
-#include <algorithm>
-#include <iostream>
+//#include <algorithm>
+//#include <iostream>
 
 
 //mysqlx::Table createTable(mysqlx::Session &session, const wstring &name, const wstring &command) {
@@ -39,26 +39,37 @@ void CheckDB(){
     mysqlx::Session session = mysqlx::Session(HOST, PORT, USER_NAME, PWD);
     mysqlx::Schema schema = session.createSchema("test", true);
     session.sql("USE test;").execute();
-    session.sql("CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20));").execute();
+    session.sql("CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20) UNIQUE);").execute();
     session.sql("CREATE TABLE IF NOT EXISTS task (id INT PRIMARY KEY AUTO_INCREMENT, head VARCHAR(100) NOT NULL, body VARCHAR(500), completion BOOL DEFAULT 0, assigner_id INT NOT NULL, FOREIGN KEY (assigner_id) REFERENCES user(id), executor_id INT NOT NULL, FOREIGN KEY (executor_id) REFERENCES user(id));").execute();
     session.sql("CREATE TABLE IF NOT EXISTS message (id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(100) NOT NULL, task_id INT NOT NULL, FOREIGN KEY (task_id) REFERENCES task(id), from_id INT NOT NULL, FOREIGN KEY (from_id) REFERENCES user(id));").execute();
 }
 
-bool IDBManager::update_user_data(User user_) {
-    user.insert("login").values(user_.login).execute();
-}
+//bool IDBManager::update_user_data(User user_) {
+//    user.insert("login").values(user_.login).execute();
+//}
+//
+//User IDBManager::get_user(int id) {
+//    string res = user.select("login").where("id = :id").bind("id", id).execute().fetchOne()[0].get<string>();
+//    return User(id, res);
+//}
+//
+//User IDBManager::search_user(string name_) {
+//    mysqlx::Row row = user.select("id", "login").where("login = :login").bind("login", name_).execute().fetchOne();
+//    int id = row[0].get<int>();
+//    string name = row[1].get<string>();
+//    return User(id, name);
+//}
+//
+//vector<User> IDBManager::get_all_users(){
+//    vector<User> users;
+//    mysqlx::RowResult res = user.select("id", "login").execute();
+//    while (mysqlx::Row row = res.fetchOne()) {
+//        User tmp(row[0].get<int>(), row[1].get<string>());
+//        users.push_back(tmp);
+//    }
+//    return users;
+//}
 
-User IDBManager::get_user(int id) {
-    string res = user.select("login").where("id = :id").bind("id", id).execute().fetchOne()[0].get<string>();
-    return User(id, res);
-}
-
-User IDBManager::search_user(string name_) {
-    mysqlx::Row row = user.select("id", "login").where("login = :login").bind("login", name_).execute().fetchOne();
-    int id = row[0].get<int>();
-    string name = row[1].get<string>();
-    return User(id, name);
-}
 
 //bool IDBManager::add_task(Task task_) {
 //    task.insert("head", "body", "assigner_id", "executor_id").values(task_.head, task_.body, task_.assigner_id,

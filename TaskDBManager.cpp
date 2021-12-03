@@ -1,8 +1,12 @@
 #include "TaskDBManager.h"
 
 bool TaskDBManager::add_task(Task task_) {
-    task.insert("head", "body", "assigner_id", "executor_id").values(task_.head, task_.body, task_.assigner_id,
-                                                                     task_.executor_id).execute();
+    try {
+        task.insert("head", "body", "assigner_id", "executor_id").values(task_.head, task_.body, task_.assigner_id, task_.executor_id).execute();
+    } catch (mysqlx::abi2::r0::Error){
+        return false;
+    }
+    return true;
 }
 
 vector<Task> TaskDBManager::get_user_tasks(int id) {

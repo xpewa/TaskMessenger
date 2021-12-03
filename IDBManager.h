@@ -4,15 +4,27 @@
 #include <mysqlx/xdevapi.h>
 #include <string>
 #include <vector>
-#define HOST "localhost"
-#define PORT 33060
-#define USER_NAME "root"
-#define PWD "1111"
-#define SCHEMA_NAME "test"
 
 using namespace std;
 
+const string HOST = "localhost";
+const int PORT = 33060;
+const string USER_NAME = "root";
+const string PWD = "1111";
+const string SCHEMA_NAME = "test";
+
 void CheckDB();
+
+class wrong_manager : public exception{
+private:
+    string errstr;
+public:
+    wrong_manager(string errstr_) : errstr(errstr_){}
+    const char * what () const throw ()
+    {
+        return errstr.c_str();
+    }
+};
 
 class User {
 public:
@@ -55,16 +67,14 @@ public:
 };
 
 class IDBManager {
-protected:
-    mysqlx::Session session = mysqlx::Session(HOST, PORT, USER_NAME, PWD, SCHEMA_NAME);
-    mysqlx::Schema schema = session.getDefaultSchema();
-    mysqlx::Table user = schema.getTable("user", true);
 public:
-    bool update_user_data(User user);
+    virtual bool update_user_data(User user) = 0;
 
-    User get_user(int id);
+    virtual User get_user(int id) = 0;
 
-    User search_user(string name_);
+    virtual User search_user(string name_) = 0;
+
+    virtual vector<User> get_all_users() = 0;
 
     virtual bool add_task(Task task) = 0;
 
@@ -73,6 +83,8 @@ public:
     virtual bool add_message(Message message) = 0;
 
     virtual vector<Message> get_messages(int task_id) = 0;
+
+    virtual void drop() = 0;
 };
 
 #endif // CPP_PROJECT_IDBMANAGER_H

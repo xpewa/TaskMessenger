@@ -20,8 +20,8 @@ target_link_libraries(cpp_project mysqlcppconn8)
 target_link_libraries(cpp_project ${Boost_LIBRARIES})
 
 add_library(dbmanager IDBManager.cpp)
-#add_library(tablemanager TableManager.cpp)
+add_library(userdbmanager UserDBManager.cpp)
 add_library(taskdbmanager TaskDBManager.cpp)
 add_library(messagedbmanager MessageDBManager.cpp)
 
-target_link_libraries(cpp_project taskdbmanager messagedbmanager dbmanager)
+target_link_libraries(cpp_project userdbmanager taskdbmanager messagedbmanager dbmanager)
