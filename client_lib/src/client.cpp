@@ -11,8 +11,8 @@ namespace pt = boost::property_tree;
 
 using boost::asio::ip::address;
 
-constexpr std::string_view IP_SERVER_TASK = "127.0.0.1";
-constexpr std::string_view IP_SERVER_MESSAGE = "127.0.0.1";
+constexpr std::string_view MESSAGE_END = "\n\r\n\r";
+constexpr std::string_view IP_SERVER = "127.0.0.1";
 constexpr size_t PORT_SERVER_TASK = 80;
 constexpr size_t PORT_SERVER_MESSAGE = 80;
 
@@ -73,7 +73,7 @@ std::string Client::AddNewMessage(Message message) {}
 
 
 bool ClientBoostAsio::Connect() {
-  tcp::endpoint ep1(address::from_string(std::string(IP_SERVER_TASK)), PORT_SERVER_TASK);
+  tcp::endpoint ep1(address::from_string(std::string(IP_SERVER)), PORT_SERVER_TASK);
   boost::system::error_code error;
   socket.connect(ep1, error);
   if (error) {
@@ -95,24 +95,23 @@ void ClientBoostAsio::Run() {
     if (requests.empty()) {
       continue;
     }
-    else {
-      os << requests.front();
-      requests.pop();
-    }
+
+    os << requests.front();
+    requests.pop();
 
     boost::asio::write(socket, write_buffer);
 
-    boost::asio::read_until(socket, read_buffer, "\n\r\n\r");
+    boost::asio::read_until(socket, read_buffer, MESSAGE_END);
     std::string answer(std::istreambuf_iterator<char>(is), {});
     answers.push(answer);
-  }
+    }
 
   socket.close();
 }
 
 std::string ClientBoostAsio::getAnswer() {
   while (answers.empty()) {
-    continue;
+    boost::this_thread::sleep(boost::posix_time::microseconds(100));
   }
 
   std::string res = answers.front();

@@ -2,7 +2,7 @@
 #define TASKMESSENGER_CLIENT_H
 
 #include "IClient.h"
-#include <queue>
+#include "tsqueue.h"
 
 #include <boost/asio.hpp>
 #include <boost/bind/bind.hpp>
@@ -18,7 +18,6 @@ public:
   bool Connect();
   bool Disconnect();
   void Run();
-  std::string getAnswer();
 
   User Authorize(std::string name) override;
   std::vector<Message> GetMessageForTask(Task task) override;
@@ -27,6 +26,8 @@ public:
   void AddNewMessage(Message message) override;
 
 private:
+  std::string getAnswer();
+
   io_context context;
   tcp::socket socket;
 
@@ -35,8 +36,8 @@ private:
   boost::asio::streambuf write_buffer;
   boost::asio::streambuf read_buffer;
 
-  std::queue<std::string> requests;
-  std::queue<std::string> answers;
+  TSQueue<std::string> requests;
+  TSQueue<std::string> answers;
 
   std::atomic<bool> open;
 };

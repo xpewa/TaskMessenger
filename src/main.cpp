@@ -12,12 +12,13 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     ClientBoostAsio client;
+    client.Connect();
+    client.Run();
     View view;
     Presenter presenter(&view, &client);
     view.setPresenter(presenter);
     view.mainWindow.showMaximized();
-    //view.login.show();
-    //view.taskDialog.show();
+    view.login.show();
 
     return a.exec();
 }
