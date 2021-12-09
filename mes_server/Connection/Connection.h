@@ -6,7 +6,6 @@
 #include <array>
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
-#include <deque>
 
 using boost::asio::ip::tcp;
 
@@ -40,7 +39,6 @@ private:
     enum { max_length = 1024 };
     char data_[max_length];
     boost::asio::streambuf read_msg_;
-    std::deque<std::string> write_msgs_;
 };
 
 #endif //SERVER_CONNECTION_H
