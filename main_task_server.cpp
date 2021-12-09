@@ -61,6 +61,9 @@ private:
         }
         result += std::to_string(arr[size - 1].id) + ":" + arr[size - 1].head + ":" + UDBM.get_user(arr[size - 1].assigner_id).login
                     + ":" + UDBM.get_user(arr[size - 1].executor_id).login;
+        
+        if (result.size() == 0)
+            result = "0";
 
         return result;
     }
