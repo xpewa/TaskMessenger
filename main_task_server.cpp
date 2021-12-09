@@ -35,7 +35,7 @@ private:
     std::string readUntil(char until, const char* arr, int &counter)
     {
         std::string result = "";
-        while (arr[counter] != ':') {
+        while (arr[counter] != until) {
             result += recieved_[counter++];
         }
 
