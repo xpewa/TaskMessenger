@@ -45,13 +45,16 @@ public:
     string body;
     bool completion = false;
     int assigner_id;
-    int executor_id;
+    int executor_id=1;
 
     Task(int id_, string head_, string body_, bool completion_, int assigner_id_, int executor_id_)
             : id(id_), head(head_), body(body_), completion(completion_), assigner_id(assigner_id_), executor_id(executor_id_) {}
 
     Task(string head_, string body_, int assigner_id_, int executor_id_)
             : head(head_), body(body_), assigner_id(assigner_id_), executor_id(executor_id_) {}
+
+    Task(string head_, string body_, int assigner_id_)
+            : head(head_), body(body_), assigner_id(assigner_id_) {}
 };
 
 class Message {
