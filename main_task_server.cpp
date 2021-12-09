@@ -80,7 +80,6 @@ private:
 
         int i = 0;
         std::string request, username, head, assigner, executor;
-        std::string to_send;
         request = readUntil(':', recieved_, i);
 
         ++i;
@@ -138,7 +137,7 @@ private:
             if (!error)
             {
                 boost::asio::async_write(socket_,
-                                         boost::asio::buffer(sent_, bytes_transferred),
+                                         boost::asio::buffer(sent_, to_send.size()),
                                          boost::bind(&Connection::handle_write, this,
                                                      boost::asio::placeholders::error));
             }
@@ -174,6 +173,7 @@ private:
     char recieved_[max_length];
     char sent_[max_length];
     bool send_required;
+    std::string to_send;
 };
 
 class Server
