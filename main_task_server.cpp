@@ -56,11 +56,11 @@ private:
         size_t size = arr.size();
         for (size_t counter = 0; counter < size - 1; ++counter)
         {
-            result += arr[counter].head + ":" + UDBM.get_user(arr[counter].assigner_id).login
+            result += std::to_string(arr[counter].id) + ":" + arr[counter].head + ":" + UDBM.get_user(arr[counter].assigner_id).login
                     + ":" + UDBM.get_user(arr[counter].executor_id).login + ":";
         }
-        result += arr[size - 1].head + ":" + UDBM.get_user(arr[size - 1].assigner_id).login
-                  + ":" + UDBM.get_user(arr[size - 1].executor_id).login;
+        result += std::to_string(arr[counter].id) + ":" + arr[counter].head + ":" + UDBM.get_user(arr[counter].assigner_id).login
+                    + ":" + UDBM.get_user(arr[counter].executor_id).login;
 
         return result;
     }
