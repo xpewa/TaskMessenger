@@ -149,7 +149,7 @@ private:
         }
         else
         {
-            handle_write();
+            handle_write(error);
         }
     }
 
