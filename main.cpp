@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <iostream>
+#include <vector>
 #include <boost/bind/bind.hpp>
 #include <boost/asio.hpp>
 #include "UserDBManager.h"
@@ -41,12 +42,45 @@ private:
         return result;
     }
 
+    void static CopyFromStringToCharArray(const std::string& str, size_t str_size, char* arr)
+    {
+        for (size_t counter = 0; counter < str_size; ++counter)
+        {
+            arr[counter] = str[counter];
+        }
+    }
+
+    std::string PrepareStringTasksResponse(std::vector<Task> arr, UserDBManager& UDBM)
+    {
+        std::string result = "";
+        size_t size = arr.size();
+        for (size_t counter = 0; counter < size - 1; ++counter)
+        {
+            result += arr[counter].head + ":" + UDBM.get_user(arr[counter].assigner_id).login
+                    + ":" + UDBM.get_user(arr[counter].executor_id).login + ":";
+        }
+        result += arr[size - 1].head + ":" + UDBM.get_user(arr[size - 1].assigner_id).login
+                  + ":" + UDBM.get_user(arr[size - 1].executor_id).login;
+
+        return result;
+    }
+
+    void EmptySendBuffer(char* arr)
+    {
+        for (size_t counter = 0; counter < max_length; ++counter)
+        {
+            arr[counter] = '\r';
+        }
+    }
+
     void Process()
     {
         UserDBManager UDBM;
         TaskDBManager TDBM;
 
         int i = 0;
+        std::string request, username, head, assigner, executor;
+        std::string to_send;
         request = readUntil(':', recieved_, i);
 
         ++i;
@@ -56,16 +90,24 @@ private:
 
             User usr(username);
             UDBM.add_user(usr);
+            int id = UDBM.search_user(username).id;
+            to_send = username + ":" + std::to_string(id) + "\r" + "\n";
+//            EmptySendBuffer(sent_);
+            CopyFromStringToCharArray(to_send, to_send.size(), sent_);
+
+            send_required = true;
         }
         else {
             if (request == "add") {
-                ++i;
-                username = readUntil(':', recieved_, i);
                 head = readUntil(':', recieved_, i);
-                body = readUntil('\r', recieved_, i);
-                int id = UDBM.search_user(username).id;
-                Task tsk(head, body, id);
+                assigner = readUntil(':', recieved_, i);
+                executor = readUntil('\r', recieved_, i);
+                int assigner_id = UDBM.search_user(assigner).id;
+                int executor_id = UDBM.search_user(executor).id;
+                Task tsk(head, assigner_id, executor_id);
                 TDBM.add_task(tsk);
+
+                send_required = false;
             }
             else {
                 if (request == "get") {
@@ -73,6 +115,13 @@ private:
                     username = readUntil('\r', recieved_, i);
                     int id = UDBM.search_user(username).id;
                     tasks = TDBM.get_user_tasks(id);
+                    to_send = std::to_string(tasks.size()) + ":"
+                            + PrepareStringTasksResponse(tasks, UDBM)
+                              + "\r" + "\n";
+//                    EmptySendBuffer(sent_);
+                    CopyFromStringToCharArray(to_send, to_send.size(), sent_);
+
+                    send_required = true;
                 }
             }
         }
@@ -82,10 +131,10 @@ private:
                      size_t bytes_transferred)
     {
         Process();
-        if (!error)
+        if (!error && send_required)
         {
             boost::asio::async_write(socket_,
-                                     boost::asio::buffer(recieved_, bytes_transferred),
+                                     boost::asio::buffer(sent_, bytes_transferred),
                                      boost::bind(&Connection::handle_write, this,
                                                  boost::asio::placeholders::error));
         }
@@ -114,7 +163,8 @@ private:
     tcp::socket socket_;
     enum { max_length = 10000 };
     char recieved_[max_length];
-    std::string username, head, body, request;
+    char sent_[max_length];
+    bool send_required;
 };
 
 class Server
