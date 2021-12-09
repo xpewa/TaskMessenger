@@ -1,7 +1,11 @@
+
 #include <cstdlib>
+#include <string>
 #include <iostream>
 #include <boost/bind/bind.hpp>
 #include <boost/asio.hpp>
+#include "UserDBManager.h"
+#include "TaskDBManager.h"
 
 using boost::asio::ip::tcp;
 
@@ -20,20 +24,68 @@ public:
 
     void start()
     {
-        socket_.async_read_some(boost::asio::buffer(data_, max_length),
+        socket_.async_read_some(boost::asio::buffer(recieved_, max_length),
                                 boost::bind(&Connection::handle_read, this,
                                             boost::asio::placeholders::error,
                                             boost::asio::placeholders::bytes_transferred));
     }
 
 private:
+    std::string readUntil(char until, const char* arr, int &counter)
+    {
+        std::string result = "";
+        while (arr[counter] != ':') {
+            result += recieved_[counter++];
+        }
+
+        return result;
+    }
+
+    void Process()
+    {
+        UserDBManager UDBM;
+        TaskDBManager TDBM;
+
+        int i = 0;
+        request = readUntil(':', recieved_, i);
+
+        ++i;
+
+        if (request == "authorization") {
+            username = readUntil('\r', recieved_, i);
+
+            User usr(username);
+            UDBM.add_user(usr);
+        }
+        else {
+            if (request == "add") {
+                ++i;
+                username = readUntil(':', recieved_, i);
+                head = readUntil(':', recieved_, i);
+                body = readUntil('\r', recieved_, i);
+                int id = UDBM.search_user(username).id;
+                Task tsk(head, body, id);
+                TDBM.add_task(tsk);
+            }
+            else {
+                if (request == "get") {
+                    vector <Task> tasks;
+                    username = readUntil('\r', recieved_, i);
+                    int id = UDBM.search_user(username).id;
+                    tasks = TDBM.get_user_tasks(id);
+                }
+            }
+        }
+    }
+
     void handle_read(const boost::system::error_code& error,
                      size_t bytes_transferred)
     {
+        Process();
         if (!error)
         {
             boost::asio::async_write(socket_,
-                                     boost::asio::buffer(data_, bytes_transferred),
+                                     boost::asio::buffer(recieved_, bytes_transferred),
                                      boost::bind(&Connection::handle_write, this,
                                                  boost::asio::placeholders::error));
         }
@@ -47,7 +99,7 @@ private:
     {
         if (!error)
         {
-            socket_.async_read_some(boost::asio::buffer(data_, max_length),
+            socket_.async_read_some(boost::asio::buffer(recieved_, max_length),
                                     boost::bind(&Connection::handle_read, this,
                                                 boost::asio::placeholders::error,
                                                 boost::asio::placeholders::bytes_transferred));
@@ -60,8 +112,9 @@ private:
 
 private:
     tcp::socket socket_;
-    enum { max_length = 1024 };
-    char data_[max_length];
+    enum { max_length = 10000 };
+    char recieved_[max_length];
+    std::string username, head, body, request;
 };
 
 class Server
