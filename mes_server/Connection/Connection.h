@@ -37,8 +37,10 @@ private:
 private:
     tcp::socket socket_;
     enum { max_length = 1024 };
-    char data_[max_length];
-    boost::asio::streambuf read_msg_;
+    char input_[max_length];
+    char output_[max_length];
+    std::string request;
+//    boost::asio::streambuf read_msg_;
 };
 
 #endif //SERVER_CONNECTION_H
