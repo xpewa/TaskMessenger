@@ -20,7 +20,7 @@ public:
 
     virtual vector<Task> get_user_tasks(int id) { throw wrong_manager("Using MessageDBManager for TaskDBManager function"); };
 
-    virtual bool update_user_data(User user) { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
+    virtual bool add_user(User user) { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
 
     virtual User get_user(int id) { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
 

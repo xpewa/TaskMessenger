@@ -1,6 +1,6 @@
 #include "UserDBManager.h"
 
-bool UserDBManager::update_user_data(User user_) {
+bool UserDBManager::add_user(User user_) {
     try{
         user.insert("login").values(user_.login).execute();
     } catch (mysqlx::abi2::r0::Error) {

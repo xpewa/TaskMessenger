@@ -14,15 +14,15 @@ int main() {
     MessageDBManager message_manager;
 
     cout<<"Ввод пользователей..."<<endl;
-    user_manager.update_user_data(User("AAA"));
-    user_manager.update_user_data(User("BBB"));
-    user_manager.update_user_data(User("CCC"));
+    user_manager.add_user(User("AAA"));
+    user_manager.add_user(User("BBB"));
+    user_manager.add_user(User("CCC"));
     cout<<"Неверный ввод пользователей..."<<endl;
 //    cout<<"Через другие менеджеры:"<<endl;
-//    task_manager.update_user_data(User("ddd"));
-//    message_manager.update_user_data(User("eee"));
+//    task_manager.add_user(User("ddd"));
+//    message_manager.add_user(User("eee"));
 //    cout<<"Занятый логин:"<<endl;
-//    user_manager.update_user_data(User("AAA"));
+//    user_manager.add_user(User("AAA"));
 
     cout<<"Все пользователи"<<endl;
     for(int i=0; i < user_manager.get_all_users().size(); i++){

@@ -44,7 +44,7 @@ void CheckDB(){
     session.sql("CREATE TABLE IF NOT EXISTS message (id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(100) NOT NULL, task_id INT NOT NULL, FOREIGN KEY (task_id) REFERENCES task(id), from_id INT NOT NULL, FOREIGN KEY (from_id) REFERENCES user(id));").execute();
 }
 
-//bool IDBManager::update_user_data(User user_) {
+//bool IDBManager::add_user(User user_) {
 //    user.insert("login").values(user_.login).execute();
 //}
 //

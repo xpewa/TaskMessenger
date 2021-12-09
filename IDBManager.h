@@ -13,8 +13,10 @@ const string USER_NAME = "root";
 const string PWD = "1111";
 const string SCHEMA_NAME = "test";
 
+//проверка на наличие БД и таблиц и их создание, если их нет
 void CheckDB();
 
+//исключение при использовании неправильного менеджера
 class wrong_manager : public exception{
 private:
     string errstr;
@@ -68,7 +70,7 @@ public:
 
 class IDBManager {
 public:
-    virtual bool update_user_data(User user) = 0;
+    virtual bool add_user(User user) = 0;
 
     virtual User get_user(int id) = 0;
 

@@ -10,7 +10,7 @@ private:
     mysqlx::Schema schema = session.getDefaultSchema();
     mysqlx::Table user = schema.getTable("user", true);
 public:
-    virtual bool update_user_data(User user);
+    virtual bool add_user(User user);
 
     virtual User get_user(int id);
 
