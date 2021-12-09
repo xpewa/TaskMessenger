@@ -22,6 +22,7 @@ public:
 
     void setUser(const User& user_);
     void setTasks(const std::vector<Task>& tasks_);
+    void pushBackTask(const Task task);
     User& getUser();
     std::vector<Task>& getTasks();
 
@@ -33,7 +34,7 @@ public slots:
     void onButtonShowTask_clicked();
 
 signals:
-    void onButtonAddTask();
+    void onButtonCreateTask();
     void onButtonShowTask(Task &task);
 
 private:

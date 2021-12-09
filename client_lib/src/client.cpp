@@ -85,27 +85,16 @@ bool ClientBoostAsio::Connect() {
 }
 bool ClientBoostAsio::Disconnect() {
   auto request = Client::Disconnect();
-  requests.push(request);
+  os << request;
+  boost::asio::write(socket, write_buffer);
   open.store(false);
 
   return true;
 }
 void ClientBoostAsio::Run() {
   while ( open.load() ) {
-    if (requests.empty()) {
-      continue;
+    if (answers.empty()) {}
     }
-
-    os << requests.front();
-    requests.pop();
-
-    boost::asio::write(socket, write_buffer);
-
-    boost::asio::read_until(socket, read_buffer, MESSAGE_END);
-    std::string answer(std::istreambuf_iterator<char>(is), {});
-    answers.push(answer);
-    }
-
   socket.close();
 }
 
@@ -119,15 +108,37 @@ std::string ClientBoostAsio::getAnswer() {
   return res;
 }
 
+std::string ClientBoostAsio::sendRequestGetAnswer(std::string request) {
+  os << request;
+  boost::asio::write(socket, write_buffer);
+
+  boost::asio::read_until(socket, read_buffer, MESSAGE_END);
+  std::string answer(std::istreambuf_iterator<char>(is), {});
+  return answer;
+}
+
 User ClientBoostAsio::Authorize(std::string name) {
   auto request = Client::Authorize(name);
-  requests.push(request);
 
-  std::string answer = getAnswer();
-  User user = Client::UserFromStr(answer);
-  return user;
+  return Client::UserFromStr(sendRequestGetAnswer(request));
 }
-std::vector<Message> ClientBoostAsio::GetMessageForTask(Task task) {}
-std::vector<Task> ClientBoostAsio::GetTaskForUser(User user) {}
-void ClientBoostAsio::AddNewTask(Task task) {}
-void ClientBoostAsio::AddNewMessage(Message message) {}
+std::vector<Message> ClientBoostAsio::GetMessageForTask(Task task) {
+  auto request = Client::GetMessageForTask(task);
+
+  return Client::MessagesFromStr(sendRequestGetAnswer(request));
+}
+std::vector<Task> ClientBoostAsio::GetTaskForUser(User user) {
+  auto request = Client::GetTaskForUser(user);
+
+  return Client::TasksFromStr(sendRequestGetAnswer(request));
+}
+void ClientBoostAsio::AddNewTask(Task task) {
+  auto request = Client::AddNewTask(task);
+
+  sendRequestGetAnswer(request);
+}
+void ClientBoostAsio::AddNewMessage(Message message) {
+  auto request = Client::AddNewMessage(message);
+
+  sendRequestGetAnswer(request);
+}

@@ -2,6 +2,7 @@
 #define TASKMESSENGER_VIEW_H
 
 #include <QObject>
+#include <memory>
 #include "iview.h"
 #include "ipresenter.h"
 
@@ -17,9 +18,9 @@ class View : public QObject, public IView
 
 public:
   View();
-  ~View();
+  ~View() = default;
 
-  void setPresenter(IPresenter& presenter);
+  void setPresenter(IPresenter* presenter_) override;
 
   void showUserData(const User& user) override;
   void showUserTasksData(const std::vector<Task>& userTasks) override;
@@ -30,6 +31,7 @@ public slots:
   void onButtonLogin();
   void onButtonShowTask(Task &task);
   void onButtonCreateTask();
+  void onButtonAddTask();
   void onButtonCreateMessage();
 
 private:

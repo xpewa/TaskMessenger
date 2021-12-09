@@ -1,12 +1,5 @@
 #include "presenter.h"
 
-void Presenter::setView(IView* view_) {
-  view = view_;
-}
-void Presenter::setClient(IClient* client_) {
-  client = client_;
-}
-
 void Presenter::Authorize(std::string name) {
   User user = client->Authorize(name);
   view->showUserData(user);

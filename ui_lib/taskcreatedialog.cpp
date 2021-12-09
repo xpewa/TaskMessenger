@@ -18,14 +18,6 @@ void TaskCreateDialog::setUser(const User& user_)
   user = user_;
 }
 
-User& TaskCreateDialog::getUser()
-{
-  return user;
-}
-void TaskCreateDialog::setTask(const Task& task_)
-{
-  task = task_;
-}
 Task& TaskCreateDialog::getTask()
 {
   return task;
@@ -33,7 +25,11 @@ Task& TaskCreateDialog::getTask()
 
 void TaskCreateDialog::on_buttonCreateTask_clicked()
 {
-  Task new_task;
-  task = new_task;
+  task.setTitle( ui->lineEdit_title->text().toStdString() );
+  User worker;
+  worker.setName( ui->lineEdit_executor->text().toStdString() );
+  task.setWorker(worker);
+  task.setAssigner(user);
+
   emit onButtonCreateTask();
 }

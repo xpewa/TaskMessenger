@@ -19,8 +19,6 @@ public:
     ~TaskCreateDialog();
 
     void setUser(const User& user_);
-    User& getUser();
-    void setTask(const Task& task_);
     Task& getTask();
 
 private slots:

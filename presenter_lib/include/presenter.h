@@ -1,18 +1,17 @@
 #ifndef TASKMESSENGER_PRESENTER_H
 #define TASKMESSENGER_PRESENTER_H
 
+#include <memory>
+
 #include "ipresenter.h"
 #include "iview.h"
 #include "IClient.h"
 
 class Presenter : public IPresenter {
 public:
-  Presenter() : view(nullptr), client(nullptr) {}
-  Presenter(IView* view, IClient* client) : view(view), client(client) {}
-  ~Presenter() { delete view; delete client; }
-
-  void setView(IView* view_);
-  void setClient(IClient* client_);
+  Presenter(std::unique_ptr<IView> view_, std::unique_ptr<IClient> client_)
+      : view(std::move(view_)), client(std::move(client_)) { view->setPresenter(this); }
+  ~Presenter() {}
 
   void Authorize(std::string name) override;
   void GetTaskForUser(User user) override;
@@ -21,8 +20,8 @@ public:
   void AddNewMessage(Message message) override;
 
 private:
-  IView* view;
-  IClient* client;
+  std::unique_ptr<IView> view;
+  std::unique_ptr<IClient> client;
   User user;
   Task task;
   std::vector<Task> userTasks;

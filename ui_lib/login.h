@@ -18,7 +18,6 @@ public:
     explicit Login(QWidget *parent = nullptr);
     ~Login();
 
-    void setUser(const User& user_);
     User& getUser();
 
 private slots:

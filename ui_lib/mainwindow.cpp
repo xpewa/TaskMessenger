@@ -36,6 +36,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+
+    //QStringList labels;
+    //labels << "Задача" << "Инициатор" << "Иcполнитель" << "Подробнее";
+    //table->setHorizontalHeaderLabels(labels);
 }
 
 MainWindow::~MainWindow()
@@ -52,6 +56,11 @@ void MainWindow::setTasks(const std::vector<Task>& tasks_)
 {
   tasks = tasks_;
 }
+
+void MainWindow::pushBackTask(const Task task) {
+  tasks.push_back(task);
+}
+
 User& MainWindow::getUser()
 {
   return user;
@@ -63,7 +72,7 @@ std::vector<Task>& MainWindow::getTasks()
 
 void MainWindow::on_buttonAddTask_clicked()
 {
-    emit onButtonAddTask();
+    emit onButtonCreateTask();
 }
 void MainWindow::onButtonShowTask_clicked()
 {
@@ -76,9 +85,6 @@ void MainWindow::onButtonShowTask_clicked()
     i = std::distance(open_btn_array.begin(), iter);
   }
 
-  user.setName(std::to_string(i));
-  showUserData();
-
   emit onButtonShowTask(tasks[i]);
 }
 
@@ -89,16 +95,13 @@ void MainWindow::showUserData() {
 }
 
 void MainWindow::showTasks() {
-  User assigner1(0, "name1");
-  User assigner2(0, "name2");
-  User worker(0, "work");
-  Task task(0, "title1", assigner1, worker);
-  Task task2(0, "title2", assigner2, worker);
-  tasks.push_back(task);
-  tasks.push_back(task2);
+  //User assigner1(0, "Технопарк");
+  //User worker(0, "Команда номер 4");
+  //Task task(0, "Сделать проект по С++", assigner1, worker);
+  //tasks.push_back(task);
 
   QTableWidget* table = ui->tabWidget->findChild<QWidget*>("tab")->findChild<QTableWidget*>("tableTasks");
-  table->clear();
+  table->clearContents();
   table->setRowCount(0);
   open_btn_array.clear();
 

@@ -11,14 +11,19 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    ClientBoostAsio client;
-    client.Connect();
-    client.Run();
-    View view;
-    Presenter presenter(&view, &client);
-    view.setPresenter(presenter);
-    view.mainWindow.showMaximized();
-    view.login.show();
+    auto view = std::make_unique<View>();
+    view->login.show();
+    //auto viewPtr = view.get();
+    auto client = std::make_unique<ClientBoostAsio>();
+    if (!client->Connect()) {
+      //return 1;
+    }
+    //std::thread t(&ClientBoostAsio::Run, client.get());
+    //t.detach();
+
+    auto presenter = std::make_unique<Presenter>(std::move(view), std::move(client));
+
+    //auto widget = std::make_pair(std::move(presenter), viewPtr);
 
     return a.exec();
 }

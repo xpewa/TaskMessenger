@@ -13,11 +13,6 @@ Login::~Login()
     delete ui;
 }
 
-void Login::setUser(const User& user_)
-{
-  user = user_;
-}
-
 User& Login::getUser()
 {
   return user;

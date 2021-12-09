@@ -27,6 +27,7 @@ public:
 
 private:
   std::string getAnswer();
+  std::string sendRequestGetAnswer(std::string request);
 
   io_context context;
   tcp::socket socket;
@@ -36,7 +37,6 @@ private:
   boost::asio::streambuf write_buffer;
   boost::asio::streambuf read_buffer;
 
-  TSQueue<std::string> requests;
   TSQueue<std::string> answers;
 
   std::atomic<bool> open;

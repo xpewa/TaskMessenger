@@ -21,9 +21,9 @@ void TaskDialog::setTask(const Task& task_)
 {
   task = task_;
 }
-void TaskDialog::setMessage(const Message& message_)
+void TaskDialog::pushBackMessage(const Message& message_)
 {
-  message = message_;
+  messages.push_back(message_);
 }
 void TaskDialog::setMessages(const std::vector<Message>& messages_)
 {
@@ -46,12 +46,33 @@ std::vector<Message>& TaskDialog::getMessages()
   return messages;
 }
 
-void TaskDialog::updateTaskData(const Task& task) {}
-void TaskDialog::updateMessages(const std::vector<Message>& message) {}
+void TaskDialog::updateTaskData(Task& task) {
+  ui->label->setText(QString::fromStdString(task.getTitle()));
+
+  updateMessages();
+}
+
+void TaskDialog::addMessage(Message message) {
+  std::string str = message.getWriter().getName() + " : " + message.getText();
+  ui->listWidget->addItem(QString::fromStdString(str));
+}
+
+void TaskDialog::updateMessages() {
+  User user(10, "Аполлинарий");
+  Message message(0, "Привет! Это текст сообщения.", user);
+  messages.push_back(message);
+
+  ui->listWidget->clear();
+
+  for (int i = 0; i < messages.size(); ++i) {
+    addMessage(messages[i]);
+  }
+}
 
 void TaskDialog::on_buttonSendMessage_clicked()
 {
-  Message new_message;
-  message = new_message;
+  message.setWriter(user);
+  message.setText( ui->plainTextEdit->toPlainText().toStdString() );
+  ui->plainTextEdit->clear();
   emit onButtonSendMessage();
 }

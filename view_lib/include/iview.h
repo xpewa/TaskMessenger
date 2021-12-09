@@ -4,6 +4,7 @@
 #include "user.h"
 #include "task.h"
 #include "message.h"
+#include "ipresenter.h"
 #include <vector>
 
 class IView {
@@ -13,6 +14,7 @@ public:
   virtual void showTaskData(const Task& task) = 0;
   virtual void showMessagesData(const std::vector<Message>& message) = 0;
 
+  virtual void setPresenter(IPresenter* presenter_) = 0;
   virtual ~IView() {}
 };
 
