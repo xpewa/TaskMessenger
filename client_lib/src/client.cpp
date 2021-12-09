@@ -7,7 +7,7 @@
 
 using boost::asio::ip::address;
 
-constexpr std::string_view MESSAGE_END = "\n\r\n\r";
+constexpr std::string_view MESSAGE_END = "\r\n";
 constexpr std::string_view IP_SERVER = "127.0.0.1";
 constexpr size_t PORT_SERVER_TASK = 5050;
 constexpr size_t PORT_SERVER_MESSAGE = 80;
@@ -57,7 +57,7 @@ std::vector<Message> Client::MessagesFromStr(std::string const &str) {
   }
 
   int count = std::stoi(strings[0]);
-  for (int i = 1; i < count; i += 3) {
+  for (int i = 1; i < strings.size(); i += 2) {
     Message msg;
     msg.setText(strings[i]);
     User writer;
@@ -82,8 +82,9 @@ std::vector<Task> Client::TasksFromStr(std::string const &str) {
     strings.push_back(s);
   }
 
+
   int count = std::stoi(strings[0]);
-  for (int i = 1; i < count; i += 4) {
+  for (int i = 1; i < strings.size(); i += 4) {
     Task task;
     task.setId(std::stoi(strings[i]));
 
