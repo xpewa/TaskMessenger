@@ -133,16 +133,23 @@ private:
                      size_t bytes_transferred)
     {
         Process();
-        if (!error && send_required)
+        if (send_required)
         {
-            boost::asio::async_write(socket_,
-                                     boost::asio::buffer(sent_, bytes_transferred),
-                                     boost::bind(&Connection::handle_write, this,
-                                                 boost::asio::placeholders::error));
+            if (!error)
+            {
+                boost::asio::async_write(socket_,
+                                         boost::asio::buffer(sent_, bytes_transferred),
+                                         boost::bind(&Connection::handle_write, this,
+                                                     boost::asio::placeholders::error));
+            }
+            else
+            {
+                delete this;
+            }
         }
         else
         {
-            delete this;
+            handle_write();
         }
     }
 
