@@ -12,8 +12,8 @@ using boost::asio::io_context;
 
 class ClientBoostAsio : public IClient {
 public:
-  ClientBoostAsio() : socket(context), is(&read_buffer), os(&write_buffer) {};
-  ~ClientBoostAsio() { socket.close(); }
+  ClientBoostAsio() : socket_task(context), socket_message(context), is(&read_buffer), os(&write_buffer) {};
+  ~ClientBoostAsio() { socket_task.close(); socket_message.close(); }
 
   bool Connect();
   bool Disconnect();
@@ -27,10 +27,11 @@ public:
 
 private:
   std::string getAnswer();
-  std::string sendRequestGetAnswer(std::string request);
+  std::string sendRequestGetAnswer(std::string request, tcp::socket& socket);
 
   io_context context;
-  tcp::socket socket;
+  tcp::socket socket_task;
+  tcp::socket socket_message;
 
   std::ostream os;
   std::istream is;

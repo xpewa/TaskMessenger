@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     //auto viewPtr = view.get();
     auto client = std::make_unique<ClientBoostAsio>();
     if (!client->Connect()) {
-      //return 1;
+      return 11;
     }
     //std::thread t(&ClientBoostAsio::Run, client.get());
     //t.detach();
