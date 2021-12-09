@@ -36,10 +36,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     table->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
-
-    //QStringList labels;
-    //labels << "Задача" << "Инициатор" << "Иcполнитель" << "Подробнее";
-    //table->setHorizontalHeaderLabels(labels);
 }
 
 MainWindow::~MainWindow()

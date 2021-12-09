@@ -49,7 +49,10 @@ std::vector<Message>& TaskDialog::getMessages()
 void TaskDialog::updateTaskData(Task& task) {
   ui->label->setText(QString::fromStdString(task.getTitle()));
 
-  updateMessages();
+  //
+  //messages.clear();
+  //updateMessages();
+  //
 }
 
 void TaskDialog::addMessage(Message message) {
@@ -58,9 +61,11 @@ void TaskDialog::addMessage(Message message) {
 }
 
 void TaskDialog::updateMessages() {
-  User user(10, "Аполлинарий");
-  Message message(0, "Привет! Это текст сообщения.", user);
-  messages.push_back(message);
+  //
+  //User user(10, "Аполлинарий");
+  //Message message(0, "Привет! Это текст сообщения.", user);
+  //messages.push_back(message);
+  //
 
   ui->listWidget->clear();
 

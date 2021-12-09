@@ -152,11 +152,17 @@
             <height>1000000</height>
            </size>
           </property>
+          <property name="gridStyle">
+           <enum>Qt::SolidLine</enum>
+          </property>
           <property name="rowCount">
-           <number>1</number>
+           <number>0</number>
+          </property>
+          <property name="columnCount">
+           <number>4</number>
           </property>
           <attribute name="horizontalHeaderVisible">
-           <bool>false</bool>
+           <bool>true</bool>
           </attribute>
           <attribute name="horizontalHeaderCascadingSectionResizes">
            <bool>false</bool>
@@ -165,16 +171,16 @@
            <number>0</number>
           </attribute>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>270</number>
+           <number>220</number>
           </attribute>
           <attribute name="horizontalHeaderHighlightSections">
-           <bool>true</bool>
+           <bool>false</bool>
           </attribute>
           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
            <bool>false</bool>
           </attribute>
           <attribute name="horizontalHeaderStretchLastSection">
-           <bool>true</bool>
+           <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderVisible">
            <bool>false</bool>
@@ -186,7 +192,10 @@
            <number>0</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>60</number>
+           <number>50</number>
+          </attribute>
+          <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderShowSortIndicator" stdset="0">
            <bool>false</bool>
@@ -194,15 +203,9 @@
           <attribute name="verticalHeaderStretchLastSection">
            <bool>false</bool>
           </attribute>
-          <row/>
           <column>
            <property name="text">
-            <string>Мои задачи</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Исполнитель</string>
+            <string>Задача</string>
            </property>
           </column>
           <column>
@@ -212,14 +215,14 @@
           </column>
           <column>
            <property name="text">
-            <string/>
+            <string>Исполнитель</string>
            </property>
           </column>
-          <item row="0" column="3">
+          <column>
            <property name="text">
-            <string/>
+            <string>Открыть</string>
            </property>
-          </item>
+          </column>
          </widget>
         </item>
        </layout>

@@ -24,7 +24,6 @@ public:
 
   void showUserData(const User& user) override;
   void showUserTasksData(const std::vector<Task>& userTasks) override;
-  void showTaskData(const Task& task) override;
   void showMessagesData(const std::vector<Message>& message) override;
 
 public slots:

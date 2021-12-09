@@ -83,16 +83,18 @@ std::vector<Task> Client::TasksFromStr(std::string const &str) {
   }
 
   int count = std::stoi(strings[0]);
-  for (int i = 1; i < count; i += 3) {
+  for (int i = 1; i < count; i += 4) {
     Task task;
-    task.setTitle(strings[i]);
+    task.setId(std::stoi(strings[i]));
+
+    task.setTitle(strings[i+1]);
 
     User assigner;
-    assigner.setName(strings[i+1]);
+    assigner.setName(strings[i+2]);
     task.setAssigner(assigner);
 
     User worker;
-    worker.setName(strings[i+2]);
+    worker.setName(strings[i+3]);
     task.setWorker(worker);
 
     tasks.push_back(task);
@@ -109,9 +111,7 @@ std::string Client::Authorize(std::string &name) {
   return str;
 }
 std::string Client::GetMessageForTask(Task task) {
-  std::string str = "get:" + task.getTitle() + ":" +
-                    task.getAssigner().getName() +  ":" +
-                    task.getWorker().getName() + "\r\n";
+  std::string str = "get:" + std::to_string(task.getId()) + "\r\n";
   return str;
 }
 std::string Client::GetTaskForUser(User user) {

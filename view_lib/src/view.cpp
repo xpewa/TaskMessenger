@@ -25,7 +25,6 @@ void View::showUserTasksData(const std::vector<Task>& userTasks) {
   mainWindow.showTasks();
 }
 
-void View::showTaskData(const Task& task) {}
 void View::showMessagesData(const std::vector<Message>& message) {
   taskDialog.setMessages(message);
   taskDialog.updateMessages();
@@ -48,8 +47,10 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.exec();
 }
 void View::onButtonCreateTask() {
-  //User user_(1, "my_name");
+  //
+  //User user_(1, "Боб");
   //showUserData(user_);
+  //
 
   taskCreateDialog.setUser( mainWindow.getUser() );
   taskCreateDialog.setModal(true);
