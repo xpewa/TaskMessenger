@@ -214,6 +214,7 @@ private:
 
 int main(int argc, char* argv[])
 {
+    CheckDB();
     try
     {
         if (argc != 2)
