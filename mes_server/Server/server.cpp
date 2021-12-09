@@ -1,3 +1,4 @@
+
 #include <cstdlib>
 #include <iostream>
 #include <boost/bind/bind.hpp>
@@ -8,7 +9,10 @@ using boost::asio::ip::tcp;
 class Connection
 {
 public:
-    Connection(boost::asio::io_context& io_context) : socket_(io_context) {}
+    Connection(boost::asio::io_context& io_context)
+            : socket_(io_context)
+    {
+    }
 
     tcp::socket& socket()
     {
@@ -81,9 +85,9 @@ private:
         Connection* new_connection = new Connection(io_context_);
         acceptor_.async_accept(new_connection->socket(),
                                boost::bind(&Server::handle_accept,
-                                                  this,
-                                                      new_connection,
-                                                      boost::asio::placeholders::error));
+                                           this,
+                                           new_connection,
+                                           boost::asio::placeholders::error));
     }
 
     void handle_accept(Connection* new_connection,
@@ -110,6 +114,12 @@ int main(int argc, char* argv[])
 {
     try
     {
+        if (argc != 2)
+        {
+            std::cerr << "Usage: async_tcp_echo_server <port>\n";
+            return 1;
+        }
+
         Server s(std::atoi(argv[1]));
 
         s.run();
