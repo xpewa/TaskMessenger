@@ -137,7 +137,7 @@ private:
             if (!error)
             {
                 boost::asio::async_write(socket_,
-                                         boost::asio::buffer(sent_, to_send.size()),
+                                         boost::asio::buffer(to_send, to_send.size()),
                                          boost::bind(&Connection::handle_write, this,
                                                      boost::asio::placeholders::error));
             }
