@@ -13,6 +13,7 @@ void premade(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDB
     user_manager.add_user(User("BBB"));
     user_manager.add_user(User("CCC"));
     cout<<"Неверный ввод пользователей..."<<endl;
+
 //    cout<<"Через другие менеджеры:"<<endl;
 //    task_manager.add_user(User("ddd"));
 //    message_manager.add_user(User("eee"));
@@ -63,10 +64,6 @@ void premade(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDB
     for(int i=0; i < message_manager.get_messages(3).size(); i++){
         cout << "\t" << message_manager.get_messages(3)[i].text << endl;
     }
-
-//    message_manager.drop();
-//    task_manager.drop();
-//    user_manager.drop();
 }
 
 void show(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBManager& message_manager){
@@ -74,13 +71,14 @@ void show(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBMan
     for(int i=0; i < user_manager.get_all_users().size(); i++){
         cout << "\t" << user_manager.get_all_users()[i].login << endl;
     }
-
+    cout<<"------------------------------------------------\n";
     for(int i=1; i<=user_manager.get_all_users().size(); i++){
         cout<<"Tasks for user "<<user_manager.get_user(i).login<<":\n";
         for(int j=0; j<task_manager.get_user_tasks(i).size(); j++){
             cout<<'\t'<<task_manager.get_user_tasks(i)[j].head<<endl;
         }
     }
+    cout<<"------------------------------------------------\n";
 
 //    cout << "Tasks for A: " << '(' << task_manager.get_user_tasks(1)[0].head << ')' << ' ' << '(' << task_manager.get_user_tasks(1)[1].head << ')' << ' ' << '(' << task_manager.get_user_tasks(1)[2].head << ')' << endl;
 //    cout << "Tasks for B: " << '(' << task_manager.get_user_tasks(2)[0].head << ')' << ' ' << '(' << task_manager.get_user_tasks(2)[1].head << ')' << endl;
@@ -89,7 +87,7 @@ void show(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBMan
     for(int i=0; i<task_manager.get_user_tasks(1).size(); i++){
         cout<<"Messages in task "<<task_manager.get_user_tasks(1)[i].head<<":\n";
         for(int j=0; j<message_manager.get_messages(i+1).size(); j++){
-            cout<<'\t'<<message_manager.get_messages(1)[i].text << endl;
+            cout<<'\t'<<message_manager.get_messages(i+1)[j].text << endl;
         }
     }
 
@@ -125,7 +123,7 @@ void manual(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBM
     }
     for(int i=0; i<n_users; i++){
         while(true){
-            cout<<"Create task for user"<<users[i]<<"? (y/[n])\n";
+            cout<<"Create task for user "<<users[i]<<"? (y/[n])\n";
             char more;
             cin>>more;
             if(more != 'y') break;
@@ -141,7 +139,7 @@ void manual(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBM
     }
     for(int i=0; i<n_users; i++){
         while(true){
-            cout<<"Create message from user"<<users[i]<<"? (y/[n])\n";
+            cout<<"Create message from user "<<users[i]<<"? (y/[n])\n";
             char more;
             cin>>more;
             if(more != 'y') break;
@@ -153,7 +151,7 @@ void manual(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBM
             cout<<"Input message from user "<<users[i]<<" in task "<<task_manager.get_user_tasks(i+1)[task_n-1].head<<":\t";
             string mess;
             cin>>mess;
-            message_manager.add_message(Message(mess, task_n, i+1));
+            message_manager.add_message(Message(mess, task_manager.get_user_tasks(i+1)[task_n-1].id, i+1));
         }
     }
     show(user_manager, task_manager, message_manager);
@@ -177,6 +175,8 @@ int main() {
             break;
     }
 
-
+    message_manager.drop();
+    task_manager.drop();
+    user_manager.drop();
 
 }

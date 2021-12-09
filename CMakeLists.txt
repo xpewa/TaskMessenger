@@ -13,7 +13,7 @@ find_package(Boost COMPONENTS locale REQUIRED)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 
 include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include)
-include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include/mysql)
+include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include/mysqlx)
 link_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/lib64)
 
 target_link_libraries(cpp_project mysqlcppconn8)
