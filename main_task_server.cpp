@@ -100,7 +100,9 @@ private:
         else {
             if (request == "add") {
                 head = readUntil(':', recieved_, i);
+                ++i;
                 assigner = readUntil(':', recieved_, i);
+                ++i;
                 executor = readUntil('\r', recieved_, i);
                 int assigner_id = UDBM.search_user(assigner).id;
                 int executor_id = UDBM.search_user(executor).id;
