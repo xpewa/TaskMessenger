@@ -2,7 +2,7 @@
 
 bool UserDBManager::add_user(User user_) {
     try{
-        user.insert("login").values(user_.login).execute();
+        user.insert("login", "username", "password").values(user_.login, user_.username, user_.password).execute();
     } catch (mysqlx::abi2::r0::Error) {
         return false;
     }
@@ -23,7 +23,7 @@ User UserDBManager::search_user(string name_) {
 
 vector<User> UserDBManager::get_all_users(){
     vector<User> users;
-    mysqlx::RowResult res = user.select("id", "login").execute();
+    mysqlx::RowResult res = user.select("id", "login").orderBy("id").execute();
     while (mysqlx::Row row = res.fetchOne()) {
         User tmp(row[0].get<int>(), row[1].get<string>());
         users.push_back(tmp);
