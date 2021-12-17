@@ -7,7 +7,7 @@
 #include "iview.h"
 #include "IClient.h"
 
-class Presenter : public QObject, public IPresenter {
+class Presenter : public IPresenter {
 public:
   Presenter(std::unique_ptr<IView> view_, std::unique_ptr<IClient> client_)
       : view(std::move(view_)), client(std::move(client_)) { view->setPresenter(this); }
