@@ -9,7 +9,7 @@ bool MessageDBManager::add_message(const Message& message_) {
     return true;
 }
 
-std::vector<Message> MessageDBManager::get_messages(int task_id) {
+std::vector<Message> MessageDBManager::get_messages_for_task_id(int task_id) {
     std::vector<Message> messages;
     mysqlx::RowResult res = message.select("id", "text", "from_id").where("task_id = :id").orderBy("id").bind("id",task_id).execute();
     while (mysqlx::Row row = res.fetchOne()) {

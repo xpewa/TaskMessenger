@@ -6,29 +6,29 @@
 
 class TaskDBManager : public IDBManager {
 private:
-    mysqlx::Session& session;
+    mysqlx::Session &session;
     mysqlx::Schema schema;
     mysqlx::Table task;
 public:
-    TaskDBManager(mysqlx::Session& session_) : session(session_), schema(session.getSchema("test", true)), task(schema.getTable("task", true)) {}
+    TaskDBManager(mysqlx::Session &session_) : session(session_), schema(session.getSchema("test", true)), task(schema.getTable("task", true)) {}
 
-    virtual bool add_task(const Task& task);
+    bool add_task(const Task &task) override;
 
-    virtual std::vector<Task> get_user_tasks(int id);
+    std::vector<Task> get_user_tasks(int id) override;
 
-    virtual void drop() { session.sql("DROP TABLE task;").execute(); }
+    void drop() override { session.sql("DROP TABLE task;").execute(); }
 
-    virtual bool add_message(const Message& message) { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
+    bool add_message(const Message &message) override { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
 
-    virtual std::vector<Message> get_messages(int task_id) { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
+    std::vector<Message> get_messages_for_task_id(int task_id) override { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
 
-    virtual bool add_user(const User& user) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    bool add_user(const User &user) override { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 
-    virtual User get_user(int id) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    User get_user(int id) override { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 
-    virtual User search_user(std::string name_) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    User search_user(std::string name_) override { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 
-    virtual std::vector<User> get_all_users() { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    std::vector<User> get_all_users() override { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 };
 
 

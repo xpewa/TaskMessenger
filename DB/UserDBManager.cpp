@@ -1,5 +1,9 @@
 #include "UserDBManager.h"
 
+//UserDBManager::~UserDBManager() noexcept {
+//    session.close();
+//}
+
 bool UserDBManager::add_user(const User& user_) {
     try{
         user.insert("login", "username", "password").values(user_.login, user_.username, user_.password).execute();

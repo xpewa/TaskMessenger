@@ -19,7 +19,7 @@ link_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/lib64)
 target_link_libraries(main mysqlcppconn8)
 target_link_libraries(main ${Boost_LIBRARIES})
 
-add_library(dbmanager IDBManager.cpp)
+add_library(dbmanager IDBManager.cpp tables.h)
 add_library(userdbmanager UserDBManager.cpp)
 add_library(taskdbmanager TaskDBManager.cpp)
 add_library(messagedbmanager MessageDBManager.cpp)

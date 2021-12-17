@@ -4,31 +4,33 @@
 #include "IDBManager.h"
 
 
-class UserDBManager : public IDBManager{
+class UserDBManager : public IDBManager {
 private:
-    mysqlx::Session& session;
+    mysqlx::Session &session;
     mysqlx::Schema schema;
     mysqlx::Table user;
 public:
-    UserDBManager(mysqlx::Session& session_) : session(session_), schema(session.getSchema("test", true)), user(schema.getTable("user", true)) {}
+    UserDBManager(mysqlx::Session &session_) : session(session_), schema(session.getSchema("test", true)), user(schema.getTable("user", true)) {}
 
-    virtual bool add_user(const User& user);
+//     ~UserDBManager();
 
-    virtual User get_user(int id);
+    bool add_user(const User &user) override;
 
-    virtual User search_user(std::string name_);
+    User get_user(int id) override;
 
-    virtual std::vector<User> get_all_users();
+    User search_user(std::string name_) override;
 
-    virtual void drop() { session.sql("DROP TABLE user;").execute();}
+    std::vector<User> get_all_users() override;
 
-    virtual bool add_task(const Task& task) { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
+    void drop() override { session.sql("DROP TABLE user;").execute(); }
 
-    virtual std::vector<Task> get_user_tasks(int id) { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
+    bool add_task(const Task &task) override { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
 
-    virtual bool add_message(const Message& message) { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
+    std::vector<Task> get_user_tasks(int id) override { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
 
-    virtual std::vector<Message> get_messages(int task_id) { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
+    bool add_message(const Message &message) override { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
+
+    std::vector<Message> get_messages_for_task_id(int task_id) override { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
 };
 
 

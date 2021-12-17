@@ -1,9 +1,9 @@
 #include "TaskDBManager.h"
 
-bool TaskDBManager::add_task(const Task& task_) {
+bool TaskDBManager::add_task(const Task &task_) {
     try {
         task.insert("head", "body", "assigner_id", "executor_id").values(task_.head, task_.body, task_.assigner_id, task_.executor_id).execute();
-    } catch (mysqlx::abi2::r0::Error){
+    } catch (mysqlx::abi2::r0::Error) {
         return false;
     }
     return true;

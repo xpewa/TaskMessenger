@@ -57,8 +57,8 @@ void premade(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDB
 
     for(int i=0; i<task_manager.get_user_tasks(1).size(); i++){
         cout<<"Messages in task "<<task_manager.get_user_tasks(1)[i].head<<":\n";
-        for(int j=0; j<message_manager.get_messages(i+1).size(); j++){
-            cout<<'\t'<<message_manager.get_messages(i+1)[j].text << endl;
+        for(int j=0; j< message_manager.get_messages_for_task_id(i + 1).size(); j++){
+            cout << '\t' << message_manager.get_messages_for_task_id(i + 1)[j].text << endl;
         }
     }
 }
@@ -83,22 +83,22 @@ void show(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBMan
 
     for(int i=0; i<task_manager.get_user_tasks(1).size(); i++){
         cout<<"Messages in task "<<task_manager.get_user_tasks(1)[i].head<<":\n";
-        for(int j=0; j<message_manager.get_messages(i+1).size(); j++){
-            cout<<'\t'<<message_manager.get_messages(i+1)[j].text << endl;
+        for(int j=0; j< message_manager.get_messages_for_task_id(i + 1).size(); j++){
+            cout << '\t' << message_manager.get_messages_for_task_id(i + 1)[j].text << endl;
         }
     }
 
 //    cout<<"Messages in task1:"<<endl;
-//    for(int i=0; i < message_manager.get_messages(1).size(); i++){
-//        cout << "\t" << message_manager.get_messages(1)[i].text << endl;
+//    for(int i=0; i < message_manager.get_messages_for_task_id(1).size(); i++){
+//        cout << "\t" << message_manager.get_messages_for_task_id(1)[i].text << endl;
 //    }
 //    cout<<"Messages in task2:"<<endl;
-//    for(int i=0; i < message_manager.get_messages(2).size(); i++){
-//        cout << "\t" << message_manager.get_messages(2)[i].text << endl;
+//    for(int i=0; i < message_manager.get_messages_for_task_id(2).size(); i++){
+//        cout << "\t" << message_manager.get_messages_for_task_id(2)[i].text << endl;
 //    }
 //    cout<<"Messages in task3:"<<endl;
-//    for(int i=0; i < message_manager.get_messages(3).size(); i++){
-//        cout << "\t" << message_manager.get_messages(3)[i].text << endl;
+//    for(int i=0; i < message_manager.get_messages_for_task_id(3).size(); i++){
+//        cout << "\t" << message_manager.get_messages_for_task_id(3)[i].text << endl;
 //    }
 }
 

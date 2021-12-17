@@ -38,7 +38,7 @@
 
 Connection::Connection() {
     session.sql("USE test;").execute();
-    session.sql("CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20) UNIQUE, username VARCHAR(20), password VARCHAR(20));").execute();
+    session.sql("CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20) UNIQUE, username VARCHAR(30), password VARCHAR(30));").execute();
     session.sql("CREATE TABLE IF NOT EXISTS task (id INT PRIMARY KEY AUTO_INCREMENT, head VARCHAR(100) NOT NULL, body VARCHAR(2500), completion BOOL DEFAULT 0, assigner_id INT NOT NULL, FOREIGN KEY (assigner_id) REFERENCES user(id), executor_id INT NOT NULL, FOREIGN KEY (executor_id) REFERENCES user(id));").execute();
     session.sql("CREATE TABLE IF NOT EXISTS message (id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(100) NOT NULL, task_id INT NOT NULL, FOREIGN KEY (task_id) REFERENCES task(id), from_id INT NOT NULL, FOREIGN KEY (from_id) REFERENCES user(id));").execute();
 }
@@ -92,7 +92,7 @@ Connection::Connection() {
 //    message.insert("text", "task_id", "from_id").values(message_.text, message_.task_id, message_.from_id).execute();
 //}
 //
-//vector<Message> IDBManager::get_messages(int task_id) {
+//vector<Message> IDBManager::get_messages_for_task_id(int task_id) {
 //    vector<Message> messages;
 //    mysqlx::RowResult res = message.select("id", "text", "from_id").where("task_id = :id").bind("id",
 //                                                                                                task_id).execute();
