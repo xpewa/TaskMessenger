@@ -4,7 +4,7 @@
 #include "IDBManager.h"
 
 
-class UserDBManager : public IDBManager {
+class UserDBManager : public IUserDBManager {
 private:
     mysqlx::Session &session;
     mysqlx::Schema schema;
@@ -24,13 +24,13 @@ public:
 
     void drop() override { session.sql("DROP TABLE user;").execute(); }
 
-    bool add_task(const Task &task) override { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
-
-    std::vector<Task> get_user_tasks(int id) override { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
-
-    bool add_message(const Message &message) override { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
-
-    std::vector<Message> get_messages_for_task_id(int task_id) override { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
+//    bool add_task(const Task &task) override { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
+//
+//    std::vector<Task> get_user_tasks(int id) override { throw wrong_manager("Using UserDBManager for TaskDBManager function"); }
+//
+//    bool add_message(const Message &message) override { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
+//
+//    std::vector<Message> get_messages_for_task_id(int task_id) override { throw wrong_manager("Using UserDBManager for MessageDBManager function"); }
 };
 
 

@@ -6,7 +6,6 @@
 #include <vector>
 #include "tables.h"
 
-//using namespace std;
 
 const std::string HOST = "localhost";
 const int PORT = 33060;
@@ -25,26 +24,14 @@ public:
     Connection();
 };
 
-//исключение при использовании неправильного менеджера
-//class wrong_manager : public exception {
-//private:
-//    std::string errstr;
-//public:
-//    wrong_manager(std::string errstr_) : errstr(errstr_) {}
-//
-//    const char *what() const throw() {
-//        return errstr.c_str();
-//    }
-//};
-
 class wrong_manager : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
 };
 
-class IDBManager {
+class IUserDBManager {
 public:
-//    virtual ~IDBManager() = 0;
+//    virtual ~IUserDBManager() = 0;
 
     virtual bool add_user(const User& user) = 0;
 
@@ -54,11 +41,25 @@ public:
 
     virtual std::vector<User> get_all_users() = 0;
 
+    virtual void drop() = 0;
+};
+
+class ITaskDBManager {
+public:
+//    virtual ~ITaskDBManager() = 0;
+
     virtual bool add_task(const Task& task) = 0;
 
 //    virtual bool task_done();
 
     virtual std::vector<Task> get_user_tasks(int id) = 0;
+
+    virtual void drop() = 0;
+};
+
+class IMessageDBManager {
+public:
+//    virtual ~IMessageDBManager() = 0;
 
     virtual bool add_message(const Message& message) = 0;
 

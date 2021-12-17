@@ -17,7 +17,7 @@
 //    return session.getDefaultSchema().getTable(name);
 //}
 
-//IDBManager::IDBManager(){
+//IUserDBManager::IUserDBManager(){
 //    vector<string> tablenames = schema.getTableNames();
 //    if (find(tablenames.begin(), tablenames.end(), "user") == tablenames.end()) {
 //        user = createTable(session, L"test",
@@ -31,7 +31,7 @@
 //}
 
 
-//User IDBManager::add_user() {
+//User IUserDBManager::add_user() {
 //    return
 //}
 
@@ -44,23 +44,23 @@ Connection::Connection() {
 }
 
 
-//bool IDBManager::add_user(User user_) {
+//bool IUserDBManager::add_user(User user_) {
 //    user.insert("login").values(user_.login).execute();
 //}
 //
-//User IDBManager::get_user(int id) {
+//User IUserDBManager::get_user(int id) {
 //    string res = user.select("login").where("id = :id").bind("id", id).execute().fetchOne()[0].get<string>();
 //    return User(id, res);
 //}
 //
-//User IDBManager::search_user(string name_) {
+//User IUserDBManager::search_user(string name_) {
 //    mysqlx::Row row = user.select("id", "login").where("login = :login").bind("login", name_).execute().fetchOne();
 //    int id = row[0].get<int>();
 //    string name = row[1].get<string>();
 //    return User(id, name);
 //}
 //
-//vector<User> IDBManager::get_all_users(){
+//vector<User> IUserDBManager::get_all_users(){
 //    vector<User> users;
 //    mysqlx::RowResult res = user.select("id", "login").execute();
 //    while (mysqlx::Row row = res.fetchOne()) {
@@ -71,12 +71,12 @@ Connection::Connection() {
 //}
 
 
-//bool IDBManager::add_task(Task task_) {
+//bool IUserDBManager::add_task(Task task_) {
 //    task.insert("head", "body", "assigner_id", "executor_id").values(task_.head, task_.body, task_.assigner_id,
 //                                                                     task_.executor_id).execute();
 //}
 //
-//vector<Task> IDBManager::get_user_tasks(int id) {
+//vector<Task> IUserDBManager::get_user_tasks(int id) {
 //    vector<Task> tasks;
 //    mysqlx::RowResult res = task.select("id", "head", "body", "completion", "assigner_id", "executor_id").where(
 //            "assigner_id = :id OR executor_id = :id").bind("id", id).execute();
@@ -88,11 +88,11 @@ Connection::Connection() {
 //    return tasks;
 //}
 //
-//bool IDBManager::add_message(Message message_) {
+//bool IUserDBManager::add_message(Message message_) {
 //    message.insert("text", "task_id", "from_id").values(message_.text, message_.task_id, message_.from_id).execute();
 //}
 //
-//vector<Message> IDBManager::get_messages_for_task_id(int task_id) {
+//vector<Message> IUserDBManager::get_messages_for_task_id(int task_id) {
 //    vector<Message> messages;
 //    mysqlx::RowResult res = message.select("id", "text", "from_id").where("task_id = :id").bind("id",
 //                                                                                                task_id).execute();
