@@ -6,10 +6,12 @@
 
 class TaskDBManager : public IDBManager {
 private:
-    mysqlx::Session session = mysqlx::Session(HOST/*, PORT*/, USER_NAME, PWD, SCHEMA_NAME);
-    mysqlx::Schema schema = session.getDefaultSchema();
-    mysqlx::Table task = schema.getTable("task", true);
+    mysqlx::Session& session;
+    mysqlx::Schema schema;
+    mysqlx::Table task;
 public:
+    TaskDBManager(mysqlx::Session& session_) : session(session_), schema(session.getSchema("test", true)), task(schema.getTable("task", true)) {}
+
     virtual bool add_task(Task task);
 
     virtual vector<Task> get_user_tasks(int id);

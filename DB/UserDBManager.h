@@ -6,10 +6,12 @@
 
 class UserDBManager : public IDBManager{
 private:
-    mysqlx::Session session = mysqlx::Session(HOST/*, PORT*/, USER_NAME, PWD, SCHEMA_NAME);
-    mysqlx::Schema schema = session.getDefaultSchema();
-    mysqlx::Table user = schema.getTable("user", true);
+    mysqlx::Session& session;
+    mysqlx::Schema schema;
+    mysqlx::Table user;
 public:
+    UserDBManager(mysqlx::Session& session_) : session(session_), schema(session.getSchema("test", true)), user(schema.getTable("user", true)) {}
+
     virtual bool add_user(User user);
 
     virtual User get_user(int id);

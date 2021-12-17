@@ -35,14 +35,14 @@
 //    return
 //}
 
-void CheckDB(){
-    mysqlx::Session session = mysqlx::Session(HOST, PORT, USER_NAME, PWD);
-    mysqlx::Schema schema = session.createSchema("test", true);
+
+Connection::Connection() {
     session.sql("USE test;").execute();
     session.sql("CREATE TABLE IF NOT EXISTS user (id INT PRIMARY KEY AUTO_INCREMENT, login VARCHAR(20) UNIQUE, username VARCHAR(20), password VARCHAR(20));").execute();
     session.sql("CREATE TABLE IF NOT EXISTS task (id INT PRIMARY KEY AUTO_INCREMENT, head VARCHAR(100) NOT NULL, body VARCHAR(2500), completion BOOL DEFAULT 0, assigner_id INT NOT NULL, FOREIGN KEY (assigner_id) REFERENCES user(id), executor_id INT NOT NULL, FOREIGN KEY (executor_id) REFERENCES user(id));").execute();
     session.sql("CREATE TABLE IF NOT EXISTS message (id INT PRIMARY KEY AUTO_INCREMENT, text VARCHAR(100) NOT NULL, task_id INT NOT NULL, FOREIGN KEY (task_id) REFERENCES task(id), from_id INT NOT NULL, FOREIGN KEY (from_id) REFERENCES user(id));").execute();
 }
+
 
 //bool IDBManager::add_user(User user_) {
 //    user.insert("login").values(user_.login).execute();

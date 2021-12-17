@@ -6,10 +6,12 @@
 
 class MessageDBManager : public IDBManager {
 private:
-    mysqlx::Session session = mysqlx::Session(HOST/*, PORT*/, USER_NAME, PWD, SCHEMA_NAME);
-    mysqlx::Schema schema = session.getDefaultSchema();
-    mysqlx::Table message = schema.getTable("message", true);
+    mysqlx::Session& session;
+    mysqlx::Schema schema;
+    mysqlx::Table message;
 public:
+    MessageDBManager(mysqlx::Session& session_) : session(session_), schema(session.getSchema("test", true)), message(schema.getTable("user", true)) {}
+
     virtual bool add_message(Message message);
 
     virtual vector<Message> get_messages(int task_id);

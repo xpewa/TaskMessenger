@@ -156,10 +156,10 @@ void manual(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBM
 }
 
 int main() {
-    CheckDB();
-    UserDBManager user_manager;
-    TaskDBManager task_manager;
-    MessageDBManager message_manager;
+    Connection connection;
+    UserDBManager user_manager(connection.session);
+    TaskDBManager task_manager(connection.session);
+    MessageDBManager message_manager(connection.session);
     int choice;
     cout<<"1 - premade\n2 - manual\n";
     cin>>choice;

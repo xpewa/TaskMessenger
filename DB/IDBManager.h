@@ -13,17 +13,25 @@ const string USER_NAME = "root";
 const string PWD = "1111";
 const string SCHEMA_NAME = "test";
 
-//проверка на наличие БД и таблиц и их создание, если их нет
-void CheckDB();
+//установка соединения
+class Connection {
+public:
+//    bool res = true;
+    mysqlx::Session session = mysqlx::Session(HOST, PORT, USER_NAME, PWD);
+//    session.sql("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test'")
+    mysqlx::Schema schema = session.createSchema("test", true);
+
+    Connection();
+};
 
 //исключение при использовании неправильного менеджера
-class wrong_manager : public exception{
+class wrong_manager : public exception {
 private:
     string errstr;
 public:
-    wrong_manager(string errstr_) : errstr(errstr_){}
-    const char * what () const throw ()
-    {
+    wrong_manager(string errstr_) : errstr(errstr_) {}
+
+    const char *what() const throw() {
         return errstr.c_str();
     }
 };
@@ -56,7 +64,7 @@ public:
             : head(head_), body(body_), assigner_id(assigner_id_), executor_id(executor_id_) {}
 
     Task(string head_, string body_, int assigner_id_)
-            : head(head_), body(body_), assigner_id(assigner_id_), executor_id(assigner_id_) {}
+            : head(head_), body(body_), assigner_id(assigner_id_), executor_id(assigner_id_/*1*/) {}
 
     Task(string head_, int assigner_id_, int executor_id_)
             : head(head_), assigner_id(assigner_id_), executor_id(executor_id_) {}
