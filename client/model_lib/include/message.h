@@ -12,9 +12,9 @@ public:
   void setId(const int id_);
   void setText(const std::string text_);
   void setWriter(const User writer_);
-  int getId();
-  std::string getText();
-  User getWriter();
+  int getId() const;
+  std::string getText() const;
+  User getWriter() const;
 private:
   int id;
   std::string text;

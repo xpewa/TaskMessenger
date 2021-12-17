@@ -8,7 +8,7 @@ void Task::setId(const int id_) { id = id_; }
 void Task::setTitle(const std::string title_) { title = title_; }
 void Task::setAssigner(const User assigner_) { assigner = assigner_; }
 void Task::setWorker(const User worker_) { worker = worker_; }
-int Task::getId() { return id;}
-std::string Task::getTitle() { return title; }
-User Task::getAssigner() { return assigner; }
-User Task::getWorker() { return worker; }
+int Task::getId() const { return id;}
+std::string Task::getTitle() const { return title; }
+User Task::getAssigner() const { return assigner; }
+User Task::getWorker() const { return worker; }

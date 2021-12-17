@@ -27,7 +27,7 @@ public:
 
 TEST(PresenterTest, Authorize) {
   MockClient* client = new MockClient();
-  MockView* view = new MockView();
+  auto view = std::make_unique<MockView>();
   EXPECT_CALL(*client, Authorize("name")).Times(AtLeast(1));
   EXPECT_CALL(*view, showUserData(_)).Times(AtLeast(1));
 

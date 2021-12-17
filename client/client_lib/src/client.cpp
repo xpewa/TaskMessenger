@@ -15,18 +15,17 @@ constexpr size_t PORT_SERVER_MESSAGE = 80;
 class Client
 {
 public:
-  static User UserFromStr(std::string const &str);
-  static std::vector<Message> MessagesFromStr(std::string const &str);
-  static std::vector<Task> TasksFromStr(std::string const &str);
-  static std::string Disconnect();
-  static std::string Authorize(std::string &name);
-  static std::string GetMessageForTask(Task task);
-  static std::string GetTaskForUser(User user);
-  static std::string AddNewTask(Task task);
-  static std::string AddNewMessage(Message message);
+  static User UserFromStr(const std::string &str);
+  static std::vector<Message> MessagesFromStr(const std::string &str);
+  static std::vector<Task> TasksFromStr(const std::string &str);
+  static std::string Authorize(const std::string& name);
+  static std::string GetMessageForTask(const Task& task);
+  static std::string GetTaskForUser(const User& user);
+  static std::string AddNewTask(const Task& task);
+  static std::string AddNewMessage(const Message& message);
 };
 
-User Client::UserFromStr(std::string const &str) {
+User Client::UserFromStr(const std::string &str) {
     User res;
 
     std::string string(str);
@@ -44,7 +43,7 @@ User Client::UserFromStr(std::string const &str) {
     return res;
 }
 
-std::vector<Message> Client::MessagesFromStr(std::string const &str) {
+std::vector<Message> Client::MessagesFromStr(const std::string &str) {
   std::vector<Message> res;
 
   std::string string(str);
@@ -56,7 +55,6 @@ std::vector<Message> Client::MessagesFromStr(std::string const &str) {
     strings.push_back(s);
   }
 
-  int count = std::stoi(strings[0]);
   for (int i = 1; i < strings.size(); i += 2) {
     Message msg;
     msg.setText(strings[i]);
@@ -70,7 +68,7 @@ std::vector<Message> Client::MessagesFromStr(std::string const &str) {
   return res;
 }
 
-std::vector<Task> Client::TasksFromStr(std::string const &str) {
+std::vector<Task> Client::TasksFromStr(const std::string &str) {
   std::vector<Task> tasks;
 
   std::string string(str);
@@ -83,7 +81,6 @@ std::vector<Task> Client::TasksFromStr(std::string const &str) {
   }
 
 
-  int count = std::stoi(strings[0]);
   for (int i = 1; i < strings.size(); i += 4) {
     Task task;
     task.setId(std::stoi(strings[i]));
@@ -104,28 +101,25 @@ std::vector<Task> Client::TasksFromStr(std::string const &str) {
   return tasks;
 }
 
-std::string Client::Disconnect() {
-  return "";
-}
-std::string Client::Authorize(std::string &name) {
+std::string Client::Authorize(const std::string& name) {
   std::string str = "authorization:" + name + "\r\n";
   return str;
 }
-std::string Client::GetMessageForTask(Task task) {
+std::string Client::GetMessageForTask(const Task& task) {
   std::string str = "get:" + std::to_string(task.getId()) + "\r\n";
   return str;
 }
-std::string Client::GetTaskForUser(User user) {
+std::string Client::GetTaskForUser(const User& user) {
   std::string str = "get:" + user.getName() + "\r\n";
   return str;
 }
-std::string Client::AddNewTask(Task task) {
+std::string Client::AddNewTask(const Task& task) {
   std::string str = "add:" + task.getTitle() + ":" +
                   task.getAssigner().getName() + ":" +
                   task.getWorker().getName() + "\r\n";
   return str;
 }
-std::string Client::AddNewMessage(Message message) {
+std::string Client::AddNewMessage(const Message& message) {
   std::string str = "add:" + message.getText() + ":" +
                     message.getWriter().getName() + "\r\n";
   return str;
@@ -145,35 +139,8 @@ bool ClientBoostAsio::Connect() {
 
   return true;
 }
-bool ClientBoostAsio::Disconnect() {
-  auto request = Client::Disconnect();
-  os << request;
-  boost::asio::write(socket_task, write_buffer);
-  os << request;
-  boost::asio::write(socket_message, write_buffer);
-  open.store(false);
 
-  return true;
-}
-void ClientBoostAsio::Run() {
-  while ( open.load() ) {
-    if (answers.empty()) {}
-    }
-  socket_task.close();
-  socket_message.close();
-}
-
-std::string ClientBoostAsio::getAnswer() {
-  while (answers.empty()) {
-    boost::this_thread::sleep(boost::posix_time::microseconds(100));
-  }
-
-  std::string res = answers.front();
-  answers.pop();
-  return res;
-}
-
-std::string ClientBoostAsio::sendRequestGetAnswer(std::string request, tcp::socket& socket) {
+std::string ClientBoostAsio::sendRequestGetAnswer(const std::string& request, tcp::socket& socket) {
   os << request;
   boost::asio::write(socket, write_buffer);
 
@@ -182,28 +149,28 @@ std::string ClientBoostAsio::sendRequestGetAnswer(std::string request, tcp::sock
   return answer;
 }
 
-User ClientBoostAsio::Authorize(std::string name) {
+User ClientBoostAsio::Authorize(const std::string& name) {
   auto request = Client::Authorize(name);
 
   return Client::UserFromStr(sendRequestGetAnswer(request, socket_task));
 }
-std::vector<Message> ClientBoostAsio::GetMessageForTask(Task task) {
+std::vector<Message> ClientBoostAsio::GetMessageForTask(const Task& task) {
   auto request = Client::GetMessageForTask(task);
 
   return Client::MessagesFromStr(sendRequestGetAnswer(request, socket_message));
 }
-std::vector<Task> ClientBoostAsio::GetTaskForUser(User user) {
+std::vector<Task> ClientBoostAsio::GetTaskForUser(const User& user) {
   auto request = Client::GetTaskForUser(user);
 
   return Client::TasksFromStr(sendRequestGetAnswer(request, socket_task));
 }
-void ClientBoostAsio::AddNewTask(Task task) {
+void ClientBoostAsio::AddNewTask(const Task& task) {
   auto request = Client::AddNewTask(task);
 
   os << request;
   boost::asio::write(socket_task, write_buffer);
 }
-void ClientBoostAsio::AddNewMessage(Message message) {
+void ClientBoostAsio::AddNewMessage(const Message& message) {
   auto request = Client::AddNewMessage(message);
 
   os << request;

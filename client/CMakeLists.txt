@@ -10,6 +10,8 @@ option(WITH_TESTS "Build tests" ON)
 if (WITH_TESTS)
     enable_testing()
     find_package(GTest REQUIRED)
+    find_package(PkgConfig REQUIRED)
+    pkg_search_module(GMOCK gmock REQUIRED)
     set(BUILD_TESTS ON)
 endif()
 

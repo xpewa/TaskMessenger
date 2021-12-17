@@ -1,15 +1,15 @@
 #include "presenter.h"
 
 void Presenter::Authorize(std::string name) {
-  User user = client->Authorize(name);
+  user = client->Authorize(name);
   view->showUserData(user);
 }
 void Presenter::GetTaskForUser(User user) {
-  std::vector<Task> tasks = client->GetTaskForUser(user);
-  view->showUserTasksData(tasks);
+  userTasks = client->GetTaskForUser(user);
+  view->showUserTasksData(userTasks);
 }
 void Presenter::GetMessageForTask(Task task) {
-  std::vector<Message> messages = client->GetMessageForTask(task);
+  messages = client->GetMessageForTask(task);
   view->showMessagesData(messages);
 }
 void Presenter::AddNewTask(Task task) {

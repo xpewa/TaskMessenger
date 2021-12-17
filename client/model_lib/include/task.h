@@ -14,10 +14,10 @@ public:
   void setTitle(const std::string title_);
   void setAssigner(const User assigner_);
   void setWorker(const User worker_);
-  int getId();
-  std::string getTitle();
-  User getAssigner();
-  User getWorker();
+  int getId() const;
+  std::string getTitle() const;
+  User getAssigner() const;
+  User getWorker() const;
 private:
   int id;
   std::string title;

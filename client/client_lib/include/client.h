@@ -2,11 +2,8 @@
 #define TASKMESSENGER_CLIENT_H
 
 #include "IClient.h"
-#include "tsqueue.h"
 
 #include <boost/asio.hpp>
-#include <boost/bind/bind.hpp>
-
 using boost::asio::ip::tcp;
 using boost::asio::io_context;
 
@@ -16,18 +13,15 @@ public:
   ~ClientBoostAsio() { socket_task.close(); socket_message.close(); }
 
   bool Connect();
-  bool Disconnect();
-  void Run();
 
-  User Authorize(std::string name) override;
-  std::vector<Message> GetMessageForTask(Task task) override;
-  std::vector<Task> GetTaskForUser(User user) override;
-  void AddNewTask(Task task) override;
-  void AddNewMessage(Message message) override;
+  User Authorize(const std::string& name) override;
+  std::vector<Message> GetMessageForTask(const Task& task) override;
+  std::vector<Task> GetTaskForUser(const User& user) override;
+  void AddNewTask(const Task& task) override;
+  void AddNewMessage(const Message& message) override;
 
 private:
-  std::string getAnswer();
-  std::string sendRequestGetAnswer(std::string request, tcp::socket& socket);
+  std::string sendRequestGetAnswer(const std::string& request, tcp::socket& socket);
 
   io_context context;
   tcp::socket socket_task;
@@ -37,8 +31,6 @@ private:
   std::istream is;
   boost::asio::streambuf write_buffer;
   boost::asio::streambuf read_buffer;
-
-  TSQueue<std::string> answers;
 
   std::atomic<bool> open;
 };

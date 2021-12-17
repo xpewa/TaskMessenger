@@ -9,8 +9,8 @@ public:
   User(const int id_, const std::string name_) ;
   ~User() = default;
 
-  int getId();
-  std::string getName();
+  int getId() const;
+  std::string getName() const;
   void setId(const int id_);
   void setName(const std::string name_);
 

@@ -8,6 +8,8 @@
 
 class IPresenter {
 public:
+  virtual ~IPresenter() = default;
+
   virtual void Authorize(std::string name) = 0;
   virtual void GetTaskForUser(User user) = 0;
   virtual void GetMessageForTask(Task task) = 0;
