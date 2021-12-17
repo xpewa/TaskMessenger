@@ -2,10 +2,6 @@
 Корпоративный  мессенджер с возможностью удобного распределения задач.
 
 
-BD
+=======
+UML : https://drive.google.com/file/d/1kRcDY5KhJ5oWfB9gjz97yiLJOttAdr3o/view?usp=sharing
 
-IDBManager - интерфейс, от которого наследуются TaskDBManager и MessageDBManager, из которых нужен только один для каждого сервера.
-
-Прежде, чем инициализировать класс TaskDBManager или MessageDBManager, необходимо вызвать CheckDB().
-
-В main - проверка, что все работает.
