@@ -12,23 +12,23 @@ private:
 public:
     TaskDBManager(mysqlx::Session& session_) : session(session_), schema(session.getSchema("test", true)), task(schema.getTable("task", true)) {}
 
-    virtual bool add_task(Task task);
+    virtual bool add_task(const Task& task);
 
-    virtual vector<Task> get_user_tasks(int id);
+    virtual std::vector<Task> get_user_tasks(int id);
 
     virtual void drop() { session.sql("DROP TABLE task;").execute(); }
 
-    virtual bool add_message(Message message) { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
+    virtual bool add_message(const Message& message) { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
 
-    virtual vector<Message> get_messages(int task_id) { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
+    virtual std::vector<Message> get_messages(int task_id) { throw wrong_manager("Using TaskDBManager for MessageDBManager function"); }
 
-    virtual bool add_user(User user) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    virtual bool add_user(const User& user) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 
     virtual User get_user(int id) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 
-    virtual User search_user(string name_) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    virtual User search_user(std::string name_) { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 
-    virtual vector<User> get_all_users() { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
+    virtual std::vector<User> get_all_users() { throw wrong_manager("Using TaskDBManager for UserDBManager function"); }
 };
 
 
