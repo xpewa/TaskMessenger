@@ -6,6 +6,7 @@
 #include <boost/asio.hpp>
 
 #include "../../DB/MessageDBManager.h"
+#include <iostream>
 
 using boost::asio::ip::tcp;
 
@@ -15,27 +16,23 @@ public:
 
     typedef boost::system::error_code error_code;
     typedef std::shared_ptr<Connection> ptr;
+    tcp::socket&  socket();
 
 
-    void start(const boost::system::error_code& error);
+    void start();
 
-    MessageDBManager MDBM;
 
-//    void on_message(std::array<char, MAX_IP_PACK_SIZE>& msg);
 
 private:
+    void handle_read(const boost::system::error_code& error,
+                     size_t bytes_transferred);
 
-
-    void name_handler(const boost::system::error_code& error);
-
-    void read_handler(const boost::system::error_code& error);
-
-    void write_handler(const boost::system::error_code& error);
+    void handle_write(const boost::system::error_code& error);
 
     tcp::socket socket_;
     enum { max_length = 1024 };
-    char input_[max_length];
-    char output_[max_length];
+    std::string input_;
+    std::string output_;
     std::string request;
 
 //    boost::asio::streambuf read_msg_;
