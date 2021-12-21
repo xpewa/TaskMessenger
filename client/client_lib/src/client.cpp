@@ -10,7 +10,7 @@ using boost::asio::ip::address;
 constexpr std::string_view MESSAGE_END = "\r\n";
 constexpr std::string_view IP_SERVER = "127.0.0.1";
 constexpr size_t PORT_SERVER_TASK = 5050;
-constexpr size_t PORT_SERVER_MESSAGE = 80;
+constexpr size_t PORT_SERVER_MESSAGE = 5051;
 
 class Client
 {
@@ -121,7 +121,7 @@ std::string Client::AddNewTask(const Task& task) {
 }
 std::string Client::AddNewMessage(const Task& task, const Message& message) {
   std::string str = "add:" + message.getText() + ":" +
-                    std::to_string(message.getWriter().getId()) +
+                    std::to_string(message.getWriter().getId()) + ":" +
                     std::to_string(task.getId()) + "\r\n";
   return str;
 }
