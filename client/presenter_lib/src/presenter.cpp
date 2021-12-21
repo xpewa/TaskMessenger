@@ -15,6 +15,6 @@ void Presenter::GetMessageForTask(Task task) {
 void Presenter::AddNewTask(Task task) {
   client->AddNewTask(task);
 }
-void Presenter::AddNewMessage(Message message) {
-  client->AddNewMessage(message);
+void Presenter::AddNewMessage(Task task, Message message) {
+  client->AddNewMessage(task, message);
 }

@@ -22,7 +22,7 @@ public:
   static std::string GetMessageForTask(const Task& task);
   static std::string GetTaskForUser(const User& user);
   static std::string AddNewTask(const Task& task);
-  static std::string AddNewMessage(const Message& message);
+  static std::string AddNewMessage(const Task& task, const Message& message);
 };
 
 User Client::UserFromStr(const std::string &str) {
@@ -119,9 +119,10 @@ std::string Client::AddNewTask(const Task& task) {
                   task.getWorker().getName() + "\r\n";
   return str;
 }
-std::string Client::AddNewMessage(const Message& message) {
+std::string Client::AddNewMessage(const Task& task, const Message& message) {
   std::string str = "add:" + message.getText() + ":" +
-                    message.getWriter().getName() + "\r\n";
+                    std::to_string(message.getWriter().getId()) +
+                    std::to_string(task.getId()) + "\r\n";
   return str;
 }
 
@@ -170,8 +171,8 @@ void ClientBoostAsio::AddNewTask(const Task& task) {
   os << request;
   boost::asio::write(socket_task, write_buffer);
 }
-void ClientBoostAsio::AddNewMessage(const Message& message) {
-  auto request = Client::AddNewMessage(message);
+void ClientBoostAsio::AddNewMessage(const Task& task, const Message& message) {
+  auto request = Client::AddNewMessage(task, message);
 
   os << request;
   boost::asio::write(socket_message, write_buffer);

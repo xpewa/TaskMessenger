@@ -18,7 +18,7 @@ public:
   std::vector<Message> GetMessageForTask(const Task& task) override;
   std::vector<Task> GetTaskForUser(const User& user) override;
   void AddNewTask(const Task& task) override;
-  void AddNewMessage(const Message& message) override;
+  void AddNewMessage(const Task& task, const Message& message) override;
 
 private:
   std::string sendRequestGetAnswer(const std::string& request, tcp::socket& socket);
