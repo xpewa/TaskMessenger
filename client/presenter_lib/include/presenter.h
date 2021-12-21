@@ -17,7 +17,7 @@ public:
   void GetTaskForUser(User user) override;
   void GetMessageForTask(Task task) override;
   void AddNewTask(Task task) override;
-  void AddNewMessage(Message message) override;
+  void AddNewMessage(Task task, Message message) override;
 
 private:
   std::unique_ptr<IView> view;
