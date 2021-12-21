@@ -103,10 +103,11 @@ private:
                 std::vector <Message> messages;
                 task_id = readUntil('\r', recieved_, i);
                 messages = MDBM.get_messages_for_task_id(std::stoi(task_id));
+                to_send = "";
                 to_send += std::to_string(messages.size());
                 for (int j = 0; j < messages.size(); ++j)
-                    to_send += ":" + UDBM.get_user(messages[j].from_id).login  + messages[j].text +
-                          + "\r" + "\n";
+                    to_send += ":" + messages[j].text + ":" + UDBM.get_user(messages[j].from_id).login ;
+                to_send += "\r\n";
                 CopyFromStringToCharArray(to_send, to_send.size(), sent_);
 
                 send_required = true;

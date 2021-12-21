@@ -16,11 +16,11 @@ include_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/include/mysqlx)
 link_directories(${FULL_PATH_TO_MYSQL_CONNECTOR_CPP_DIR}/lib64)
 
 
-add_library(Server Server/Server.cpp)
-add_library(Connection Connection/Connection.cpp)
+#add_library(Server Server/Server.cpp)
+#add_library(Connection Connection/Connection.cpp)
 
-add_executable(server Main/main.cpp)
-target_link_libraries(server Server Connection)
+add_executable(server main_mes_server.cpp)
+#target_link_libraries(server Server Connection)
 target_link_libraries(server  pthread ${Boost_LIBRARIES})
 add_compile_options(-pthread)
 add_link_options(-pthread)
@@ -35,6 +35,7 @@ target_link_libraries(server mysqlcppconn8)
 
 add_library(dbmanager DBConnection.cpp tables.h)
 add_library(userdbmanager IUserDBManager.h UserDBManager.cpp)
-add_library(taskdbmanager IMessageDBManager.h MessageDBManager.cpp)
+add_library(messagedbmanager IMessageDBManager.h MessageDBManager.cpp)
 
-target_link_libraries(server userdbmanager taskdbmanager dbmanager)
+target_link_libraries(server userdbmanager messagedbmanager dbmanager)
+

@@ -9,3 +9,6 @@ MessageDBManager.h
 tables.h
 UserDBManager.cpp
 UserDBManager.h
+Connection/
+Main/
+Server/
