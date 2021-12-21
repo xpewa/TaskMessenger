@@ -156,7 +156,7 @@ void manual(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDBM
 }
 
 int main() {
-    Connection connection;
+    DBConnection connection;
     UserDBManager user_manager(connection.session);
     TaskDBManager task_manager(connection.session);
     MessageDBManager message_manager(connection.session);
