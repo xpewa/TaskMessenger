@@ -128,10 +128,10 @@ std::string Client::AddNewMessage(const Message& message) {
 
 bool ClientBoostAsio::Connect() {
   tcp::endpoint ep1(address::from_string(std::string(IP_SERVER)), PORT_SERVER_TASK);
-  tcp::endpoint ep2(address::from_string(std::string(IP_SERVER)), PORT_SERVER_MESSAGE);
+//  tcp::endpoint ep2(address::from_string(std::string(IP_SERVER)), PORT_SERVER_MESSAGE);
   boost::system::error_code error;
   socket_task.connect(ep1, error);
-  socket_message.connect(ep2, error);
+//  socket_message.connect(ep2, error);
   if (error) {
     return false;
   }
