@@ -41,6 +41,9 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.setUser(mainWindow.getUser());
   taskDialog.setTask(task);
   taskDialog.updateTaskData(task);
+  std::vector<Message> messages;
+  taskDialog.setMessages(messages);
+  taskDialog.updateMessages();
   presenter->GetMessageForTask(task);
 
   taskDialog.setModal(true);

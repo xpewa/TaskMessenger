@@ -50,19 +50,20 @@ std::vector<Message> Client::MessagesFromStr(const std::string &str) {
   string.erase(str.find_last_not_of("\r\n") + 1);
   std::vector<std::string> strings;
   std::istringstream f(string);
-  std::string s;
-  while (getline(f, s, ':')) {
-    strings.push_back(s);
-  }
+  if (string[0] != 0) {
+    std::string s;
+    while (getline(f, s, ':')) {
+      strings.push_back(s);
+    }
+    for (int i = 1; i < strings.size(); i += 2) {
+      Message msg;
+      msg.setText(strings[i]);
+      User writer;
+      writer.setName(strings[i + 1]);
+      msg.setWriter(writer);
 
-  for (int i = 1; i < strings.size(); i += 2) {
-    Message msg;
-    msg.setText(strings[i]);
-    User writer;
-    writer.setName(strings[i+1]);
-    msg.setWriter(writer);
-
-    res.push_back(msg);
+      res.push_back(msg);
+    }
   }
 
   return res;
