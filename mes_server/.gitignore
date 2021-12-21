@@ -1,0 +1,14 @@
+.idea/
+cmake-build-debug/
+DBConnection.cpp
+DBConnection.h
+IMessageDBManager.h
+IUserDBManager.h
+MessageDBManager.cpp
+MessageDBManager.h
+tables.h
+UserDBManager.cpp
+UserDBManager.h
+Connection/
+Main/
+Server/
