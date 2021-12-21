@@ -104,10 +104,13 @@ private:
                 assigner = readUntil(':', recieved_, i);
                 ++i;
                 executor = readUntil('\r', recieved_, i);
-                int assigner_id = UDBM.search_user(assigner).id;
-                int executor_id = UDBM.search_user(executor).id;
-                Task tsk(head, assigner_id, executor_id);
-                TDBM.add_task(tsk);
+                try{
+                    int assigner_id = UDBM.search_user(assigner).id;
+                    int executor_id = UDBM.search_user(executor).id;
+                    Task tsk(head, assigner_id, executor_id);
+                    TDBM.add_task(tsk);
+                }
+                catch (DB_except) {}
 
                 send_required = false;
             }
