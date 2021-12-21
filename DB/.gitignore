@@ -1,6 +1,5 @@
-../.idea/
 cmake-build-debug
-.idea
+.idea/
 useful.txt
 #main.cpp
 #CMakeLists.txt

@@ -1,7 +1,8 @@
 #ifndef CPP_PROJECT_MESSAGEDBMANAGER_H
 #define CPP_PROJECT_MESSAGEDBMANAGER_H
 
-#include "IDBManager.h"
+#include "Connection.h"
+#include "IMessageDBManager.h"
 
 
 class MessageDBManager : public IMessageDBManager {

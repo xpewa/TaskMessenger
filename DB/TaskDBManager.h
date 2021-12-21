@@ -1,7 +1,8 @@
 #ifndef CPP_PROJECT_TASKDBMANAGER_H
 #define CPP_PROJECT_TASKDBMANAGER_H
 
-#include "IDBManager.h"
+#include "Connection.h"
+#include "ITaskDBManager.h"
 
 
 class TaskDBManager : public ITaskDBManager {

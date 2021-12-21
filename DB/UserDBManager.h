@@ -1,7 +1,8 @@
 #ifndef CPP_PROJECT_USERDBMANAGER_H
 #define CPP_PROJECT_USERDBMANAGER_H
 
-#include "IDBManager.h"
+#include "Connection.h"
+#include "IUserDBManager.h"
 
 
 class UserDBManager : public IUserDBManager {
