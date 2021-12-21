@@ -66,8 +66,9 @@ void View::onButtonAddTask() {
 }
 void View::onButtonCreateMessage() {
   Message message = taskDialog.getMessage();
+  Task task = taskDialog.getTask();
 
   taskDialog.pushBackMessage(message);
   taskDialog.updateMessages();
-  presenter->AddNewMessage(message);
+  presenter->AddNewMessage(task, message);
 }
