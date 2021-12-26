@@ -1,7 +1,7 @@
 #ifndef CPP_PROJECT_TASKDBMANAGER_H
 #define CPP_PROJECT_TASKDBMANAGER_H
 
-#include "Connection.h"
+#include "DBConnection.h"
 #include "ITaskDBManager.h"
 
 

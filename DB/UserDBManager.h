@@ -1,7 +1,7 @@
 #ifndef CPP_PROJECT_USERDBMANAGER_H
 #define CPP_PROJECT_USERDBMANAGER_H
 
-#include "Connection.h"
+#include "DBConnection.h"
 #include "IUserDBManager.h"
 
 

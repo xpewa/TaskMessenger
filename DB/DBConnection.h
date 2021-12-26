@@ -14,20 +14,20 @@ const std::string PWD = "1111";
 const std::string SCHEMA_NAME = "test";
 
 //установка соединения
-class Connection {
+class DBConnection {
 public:
 //    bool res = true;
     mysqlx::Session session /*= mysqlx::Session(HOST*//*, PORT*//*, USER_NAME, PWD)*/;
 //    session.sql("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test'")
     mysqlx::Schema schema /*= session.createSchema("test", true)*/;
 
-    Connection();
+    DBConnection();
 };
 
-//class wrong_manager : public std::runtime_error {
-//public:
-//    using std::runtime_error::runtime_error;
-//};
+class DB_except : public std::runtime_error {
+public:
+    using std::runtime_error::runtime_error;
+};
 
 //class IUserDBManager {
 //public:

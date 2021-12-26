@@ -1,7 +1,7 @@
 #ifndef CPP_PROJECT_MESSAGEDBMANAGER_H
 #define CPP_PROJECT_MESSAGEDBMANAGER_H
 
-#include "Connection.h"
+#include "DBConnection.h"
 #include "IMessageDBManager.h"
 
 
