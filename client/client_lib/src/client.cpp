@@ -138,7 +138,8 @@ std::string Client::EditTask(const Task& task) {
   else {
     done = "0";
   }
-  std::string str = "edit:" + task.getTitle() + ":" +
+  std::string str = "edit:" + std::to_string(task.getId()) + ":" +
+                    task.getTitle() + ":" +
                     task.getAssigner().getName() + ":" +
                     task.getWorker().getName() + ":" +
                     done + "\r\n";
