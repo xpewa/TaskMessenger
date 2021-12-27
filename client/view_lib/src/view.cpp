@@ -11,6 +11,9 @@ View::View() {
   QObject::connect(&login, &Login::onButtonLogin, this, &View::onButtonLogin);
   QObject::connect(&taskDialog, &TaskDialog::onButtonSendMessage, this, &View::onButtonCreateMessage);
   QObject::connect(&taskDialog, &TaskDialog::onCheckBox, this, &View::onCheckBox);
+
+  //QObject::connect(&thread2, &QThread::started, this, &View::run);
+  //QObject::connect(this, &View::close, &thread2, &QThread::terminate);
 }
 
 void View::setPresenter(IPresenter* presenter_) { presenter = presenter_; }
@@ -50,6 +53,8 @@ void View::onButtonShowTask(Task &task) {
 
   taskDialog.setModal(true);
   taskDialog.exec();
+
+  run(task);
 }
 void View::onButtonCreateTask() {
   //
@@ -102,4 +107,11 @@ void View::onActionUpdate() {
 
 Task View::getTask() {
   return taskDialog.getTask();
+}
+
+void View::run(Task &task) {
+  thread2.start();
+
+  presenter->Run(task, true);
+
 }

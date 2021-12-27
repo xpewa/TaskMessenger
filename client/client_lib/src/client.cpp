@@ -167,19 +167,11 @@ bool ClientBoostAsio::Connect() {
   return true;
 }
 
-void ClientBoostAsio::Run() {
-  while (true) {
-    std::string answer;
-    while (answer.empty()) {
-      //boost::this_thread::sleep(boost::posix_time::microseconds(2000));
+void ClientBoostAsio::Run(const Task& task, bool on) {
+  while (on) {
+      boost::this_thread::sleep(boost::posix_time::microseconds(2000));
 
-      boost::asio::read_until(socket_message, read_buffer, MESSAGE_END);
-      answer = std::string(std::istreambuf_iterator<char>(is), {});
-    }
-
-    Task task;
-    task.setId(answer[0]);
-    presenter->UpdateMessageForTask(task, Client::MessagesFromStr(answer));
+      presenter->UpdateMessageForTask(task, GetMessageForTask(task));
   }
 }
 

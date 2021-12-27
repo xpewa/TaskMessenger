@@ -2,6 +2,7 @@
 #define TASKMESSENGER_VIEW_H
 
 #include <QObject>
+#include <QThread>
 #include <memory>
 #include "iview.h"
 #include "ipresenter.h"
@@ -37,8 +38,15 @@ public slots:
   void onCheckBox();
   void onActionUpdate();
 
+  void run(Task &task);
+
+signals:
+  void close();
+
 private:
   IPresenter* presenter;
+
+  QThread thread2;
 public:
   Login login;
   MainWindow mainWindow;

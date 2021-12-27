@@ -20,6 +20,7 @@ public:
   virtual void AddNewMessage(Task task, Message message) = 0;
 
   virtual void UpdateMessageForTask(Task task, std::vector<Message> messages) = 0;
+  virtual void Run(Task task, bool on) = 0;
 };
 
 #endif // TASKMESSENGER_IPRESENTER_H
