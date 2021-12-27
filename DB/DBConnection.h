@@ -18,7 +18,6 @@ class DBConnection {
 public:
 //    bool res = true;
     mysqlx::Session session /*= mysqlx::Session(HOST*//*, PORT*//*, USER_NAME, PWD)*/;
-//    session.sql("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'test'")
     mysqlx::Schema schema /*= session.createSchema("test", true)*/;
 
     DBConnection();

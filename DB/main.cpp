@@ -39,11 +39,13 @@ void premade(UserDBManager& user_manager, TaskDBManager& task_manager, MessageDB
     task_manager.add_task(Task("task1 from A to B", "task1 desc", 1, 2));
     task_manager.add_task(Task("task2 from A to C", "task2 desc", 1, 3));
     task_manager.add_task(Task("task3 from B to A", "task3 desc", 2, 1));
+    task_manager.complete_task(1);
 
     for(int i=1; i<=user_manager.get_all_users().size(); i++){
         cout<<"Tasks for user "<<user_manager.get_user(i).login<<":\n";
         for(int j=0; j<task_manager.get_user_tasks(i).size(); j++){
-            cout<<'\t'<<task_manager.get_user_tasks(i)[j].head<<endl;
+            cout<<'\t'<<task_manager.get_user_tasks(i)[j].head<<"\n\t\t"<<task_manager.get_user_tasks(i)[j].body<<"\n\t\t";
+            cout<<task_manager.get_user_tasks(i)[j].assigner_id<<"\n\t\t"<<task_manager.get_user_tasks(i)[j].executor_id<<"\n\t\t"<<task_manager.get_user_tasks(i)[j].completion<<endl;
         }
     }
 

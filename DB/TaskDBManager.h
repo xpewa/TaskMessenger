@@ -15,7 +15,9 @@ public:
 
     bool add_task(const Task &task) override;
 
-    std::vector<Task> get_user_tasks(int id) override;
+    std::vector<Task> get_user_tasks(int user_id) override;
+
+    bool complete_task(int task_id) override;
 
     void drop() override { session.sql("DROP TABLE task;").execute(); }
 

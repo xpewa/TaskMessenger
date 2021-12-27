@@ -70,7 +70,6 @@ DBConnection::DBConnection() : session(mysqlx::Session(HOST/*, PORT*/, USER_NAME
 //    return users;
 //}
 
-
 //bool IUserDBManager::add_task(Task task_) {
 //    task.insert("head", "body", "assigner_id", "executor_id").values(task_.head, task_.body, task_.assigner_id,
 //                                                                     task_.executor_id).execute();
