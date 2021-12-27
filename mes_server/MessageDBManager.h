@@ -4,14 +4,15 @@
 #include "DBConnection.h"
 #include "IMessageDBManager.h"
 
-
+//класс для взаимодействия с таблицей сообщений
 class MessageDBManager : public IMessageDBManager {
 private:
     mysqlx::Session &session;
     mysqlx::Schema schema;
     mysqlx::Table message;
+    mysqlx::Table task;
 public:
-    MessageDBManager(mysqlx::Session &session_) : session(session_), schema(session.getSchema("test", true)), message(schema.getTable("message", true)) {}
+    MessageDBManager(mysqlx::Session &session_) : session(session_), schema(session.getSchema("test", true)), message(schema.getTable("message", true)), task(schema.getTable("task", true)) {}
 
     bool add_message(const Message &message) override;
 
@@ -19,17 +20,7 @@ public:
 
     void drop() override { session.sql("DROP TABLE message;").execute(); }
 
-//    bool add_task(const Task &task) override { throw wrong_manager("Using MessageDBManager for TaskDBManager function"); }
-//
-//    std::vector<Task> get_user_tasks(int id) override { throw wrong_manager("Using MessageDBManager for TaskDBManager function"); };
-//
-//    bool add_user(const User &user) override { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
-//
-//    User get_user(int id) override { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
-//
-//    User search_user(std::string name_) override { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
-//
-//    std::vector<User> get_all_users() override { throw wrong_manager("Using MessageDBManager for UserDBManager function"); }
+    std::vector<int> get_users_for_task(int task_id);
 };
 
 
