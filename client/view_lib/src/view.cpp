@@ -114,7 +114,7 @@ Task View::getTask() {
 }
 
 void View::run(Task &task) {
-  thread2.wait(1000);
+  thread2.sleep(1);
 
   presenter->GetMessageForTask(task);
 }
