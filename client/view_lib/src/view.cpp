@@ -54,7 +54,11 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.setModal(true);
   taskDialog.exec();
 
-  run(task);
+  thread2.start();
+  while (taskDialog.isVisible()) {
+    run(task);
+  }
+  thread2.terminate();
 }
 void View::onButtonCreateTask() {
   //
@@ -110,8 +114,7 @@ Task View::getTask() {
 }
 
 void View::run(Task &task) {
-  thread2.start();
+  thread2.wait(1000);
 
-  presenter->Run(task, true);
-
+  presenter->GetMessageForTask(task);
 }
