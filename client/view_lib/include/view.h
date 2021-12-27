@@ -38,10 +38,11 @@ public slots:
   void onCheckBox();
   void onActionUpdate();
 
-  void run(Task &task);
+  void run();
 
 signals:
   void close();
+  void connect();
 
 private:
   IPresenter* presenter;
