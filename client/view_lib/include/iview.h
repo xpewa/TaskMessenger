@@ -14,6 +14,7 @@ public:
   virtual void showMessagesData(const std::vector<Message>& message) = 0;
 
   virtual void setPresenter(IPresenter* presenter_) = 0;
+  virtual Task getTask() = 0;
   virtual ~IView() = default;
 };
 

@@ -48,6 +48,7 @@ std::vector<Message>& TaskDialog::getMessages()
 
 void TaskDialog::updateTaskData(Task& task) {
   ui->label->setText(QString::fromStdString(task.getTitle()));
+  ui->checkBox->setChecked(task.getDone());
 
   //
   //messages.clear();
@@ -80,4 +81,10 @@ void TaskDialog::on_buttonSendMessage_clicked()
   message.setText( ui->plainTextEdit->toPlainText().toStdString() );
   ui->plainTextEdit->clear();
   emit onButtonSendMessage();
+}
+
+void TaskDialog::on_checkBox_stateChanged(int arg1)
+{
+  task.setDone(arg1);
+  emit onCheckBox();
 }

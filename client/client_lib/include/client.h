@@ -9,18 +9,24 @@ using boost::asio::io_context;
 
 class ClientBoostAsio : public IClient {
 public:
-  ClientBoostAsio() : socket_task(context), socket_message(context), is(&read_buffer), os(&write_buffer) {};
+  ClientBoostAsio() : socket_task(context), socket_message(context), is(&read_buffer), os(&write_buffer), presenter(nullptr) {};
   ~ClientBoostAsio() { socket_task.close(); socket_message.close(); }
 
   bool Connect();
+  void Run();
+
+  void setPresenter(IPresenter* presenter_) override;
 
   User Authorize(const std::string& name) override;
   std::vector<Message> GetMessageForTask(const Task& task) override;
   std::vector<Task> GetTaskForUser(const User& user) override;
   void AddNewTask(const Task& task) override;
+  void EditTask(const Task& task) override;
   void AddNewMessage(const Task& task, const Message& message) override;
 
 private:
+  IPresenter* presenter;
+
   std::string sendRequestGetAnswer(const std::string& request, tcp::socket& socket);
 
   io_context context;

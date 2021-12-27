@@ -70,6 +70,12 @@ void MainWindow::on_buttonAddTask_clicked()
 {
     emit onButtonCreateTask();
 }
+
+void MainWindow::on_action_triggered()
+{
+  emit onActionUpdate();
+}
+
 void MainWindow::onButtonShowTask_clicked()
 {
   QObject* sender = QObject::sender();

@@ -7,8 +7,10 @@ View::View() {
   QObject::connect(&mainWindow, &MainWindow::onButtonCreateTask, this, &View::onButtonCreateTask);
   QObject::connect(&taskCreateDialog, &TaskCreateDialog::onButtonCreateTask, this, &View::onButtonAddTask);
   QObject::connect(&mainWindow, &MainWindow::onButtonShowTask, this, &View::onButtonShowTask);
+  QObject::connect(&mainWindow, &MainWindow::onActionUpdate, this, &View::onActionUpdate);
   QObject::connect(&login, &Login::onButtonLogin, this, &View::onButtonLogin);
   QObject::connect(&taskDialog, &TaskDialog::onButtonSendMessage, this, &View::onButtonCreateMessage);
+  QObject::connect(&taskDialog, &TaskDialog::onCheckBox, this, &View::onCheckBox);
 }
 
 void View::setPresenter(IPresenter* presenter_) { presenter = presenter_; }
@@ -41,6 +43,9 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.setUser(mainWindow.getUser());
   taskDialog.setTask(task);
   taskDialog.updateTaskData(task);
+  std::vector<Message> messages;
+  taskDialog.setMessages(messages);
+  taskDialog.updateMessages();
   presenter->GetMessageForTask(task);
 
   taskDialog.setModal(true);
@@ -60,9 +65,12 @@ void View::onButtonAddTask() {
   Task task = taskCreateDialog.getTask();
 
   taskCreateDialog.close();
-  mainWindow.pushBackTask(task);
-  mainWindow.showTasks();
+  //mainWindow.pushBackTask(task);
+  //mainWindow.showTasks();
   presenter->AddNewTask(task);
+
+  User user = mainWindow.getUser();
+  presenter->GetTaskForUser(user);
 }
 void View::onButtonCreateMessage() {
   Message message = taskDialog.getMessage();
@@ -71,4 +79,27 @@ void View::onButtonCreateMessage() {
   taskDialog.pushBackMessage(message);
   taskDialog.updateMessages();
   presenter->AddNewMessage(task, message);
+}
+
+void View::onCheckBox() {
+  Task task = taskDialog.getTask();
+
+  std::vector<Task> tasks = mainWindow.getTasks();
+  for (int i = 0; i < tasks.size(); ++i) {
+    if (task.getId() == tasks[i].getId()) {
+      tasks[i] = task;
+    }
+  }
+  mainWindow.setTasks(tasks);
+
+  presenter->EditTask(task);
+}
+
+void View::onActionUpdate() {
+  User user = mainWindow.getUser();
+  presenter->GetTaskForUser(user);
+}
+
+Task View::getTask() {
+  return taskDialog.getTask();
 }
