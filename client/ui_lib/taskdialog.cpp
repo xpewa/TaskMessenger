@@ -20,6 +20,8 @@ void TaskDialog::setUser(const User& user_)
 void TaskDialog::setTask(const Task& task_)
 {
   task = task_;
+
+  emit conn();
 }
 void TaskDialog::pushBackMessage(const Message& message_)
 {

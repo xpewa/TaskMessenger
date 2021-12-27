@@ -12,7 +12,7 @@ View::View() {
   QObject::connect(&taskDialog, &TaskDialog::onButtonSendMessage, this, &View::onButtonCreateMessage);
   QObject::connect(&taskDialog, &TaskDialog::onCheckBox, this, &View::onCheckBox);
 
-  QObject::connect(this, &View::connect, this, &View::run);
+  QObject::connect(&taskDialog, &TaskDialog::conn, this, &View::run);
   //QObject::connect(this, &View::close, &thread2, &QThread::terminate);
 }
 
@@ -50,8 +50,6 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.setMessages(messages);
   taskDialog.updateMessages();
   presenter->GetMessageForTask(task);
-
-  emit connect();
 
   taskDialog.setModal(true);
   taskDialog.exec();
@@ -111,6 +109,7 @@ Task View::getTask() {
 
 void View::run() {
   thread2.start();
+  thread2.sleep(3);
   while (taskDialog.isVisible()) {
     thread2.sleep(1);
 

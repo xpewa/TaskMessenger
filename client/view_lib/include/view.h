@@ -42,7 +42,6 @@ public slots:
 
 signals:
   void close();
-  void connect();
 
 private:
   IPresenter* presenter;
