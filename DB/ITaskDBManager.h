@@ -11,7 +11,7 @@ public:
 
     virtual bool add_task(const Task& task) = 0;
 
-//    virtual bool task_done();
+    virtual bool complete_task(int task_id) = 0;
 
     virtual std::vector<Task> get_user_tasks(int id) = 0;
 
