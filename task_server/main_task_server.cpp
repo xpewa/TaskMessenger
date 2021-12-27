@@ -61,7 +61,7 @@ private:
                           + ":" + UDBM.get_user(arr[counter].executor_id).login + ":" + (arr[counter].completion ? "1":"0") + ":";
             }
             result += std::to_string(arr[size - 1].id) + ":" + arr[size - 1].head + ":" + UDBM.get_user(arr[size - 1].assigner_id).login
-                      + ":" + UDBM.get_user(arr[size - 1].executor_id).login + (arr[size-1].completion ? "1":"0");
+                      + ":" + UDBM.get_user(arr[size - 1].executor_id).login + ":" + (arr[size-1].completion ? "1":"0");
         }
 
         return result;
