@@ -30,3 +30,7 @@ bool TaskDBManager::complete_task(int task_id){
 //    }
     return true;
 }
+
+bool TaskDBManager::incomplete_task(int task_id){
+    task.update().set("completion", 0).where("id = :task_id").bind("task_id", task_id).execute();
+}

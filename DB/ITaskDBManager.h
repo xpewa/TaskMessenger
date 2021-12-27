@@ -12,6 +12,8 @@ public:
 
 //установка флага "выполнено" для задачи
     virtual bool complete_task(int task_id) = 0;
+//установка флага "не выполнено" для задачи
+    virtual bool incomplete_task(int task_id) = 0;
 
 //получение всех задач
     virtual std::vector<Task> get_user_tasks(int id) = 0;
