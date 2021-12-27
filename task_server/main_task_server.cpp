@@ -61,7 +61,7 @@ private:
                           + ":" + UDBM.get_user(arr[counter].executor_id).login + ":" + (arr[counter].completion ? "1":"0") + ":";
             }
             result += std::to_string(arr[size - 1].id) + ":" + arr[size - 1].head + ":" + UDBM.get_user(arr[size - 1].assigner_id).login
-                      + ":" + UDBM.get_user(arr[size - 1].executor_id).login + (arr[counter].completion ? "1":"0");
+                      + ":" + UDBM.get_user(arr[size - 1].executor_id).login + (arr[size-1].completion ? "1":"0");
         }
 
         return result;
@@ -116,7 +116,7 @@ private:
             }
             else {
                 if (request == "get") {
-                    std::vector <Task> tasks;
+                    std::vector<Task> tasks;
                     username = readUntil('\r', recieved_, i);
                     int id = UDBM.search_user(username).id;
                     tasks = TDBM.get_user_tasks(id);
@@ -126,30 +126,28 @@ private:
                     CopyFromStringToCharArray(to_send, to_send.size(), sent_);
 
                     send_required = true;
-                }
-            }
-            else {
-                if (request == "edit") {
-                    task_id = std::stoi(readUntil(':', recieved_, i));
-                    ++i;
-                    head = readUntil(':', recieved_, i);
-                    ++i;
-                    assigner = readUntil(':', recieved_, i);
-                    ++i;
-                    executor = readUntil(':', recieved_, i);
-                    ++i;
-                    task_state = readUntil('\r', recieved_, i);
-                    try{
-                        if (task_state == "0") {
-                            TDBM.incomplete_task(task_id);
+                } else {
+                    if (request == "edit") {
+                        task_id = std::stoi(readUntil(':', recieved_, i));
+                        ++i;
+                        head = readUntil(':', recieved_, i);
+                        ++i;
+                        assigner = readUntil(':', recieved_, i);
+                        ++i;
+                        executor = readUntil(':', recieved_, i);
+                        ++i;
+                        task_state = readUntil('\r', recieved_, i);
+                        try {
+                            if (task_state == "0") {
+                                TDBM.incomplete_task(task_id);
+                            } else {
+                                TDBM.complete_task(task_id);
+                            }
                         }
-                        else {
-                            TDBM.complete_task(task_id);
-                        }
-                    }
-                    catch (DB_except) {}
+                        catch (DB_except) {}
 
-                    send_required = false;
+                        send_required = false;
+                    }
                 }
             }
         }
