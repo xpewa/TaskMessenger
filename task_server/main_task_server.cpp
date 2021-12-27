@@ -58,10 +58,10 @@ private:
             for (size_t counter = 0; counter < size - 1; ++counter)
             {
                 result += std::to_string(arr[counter].id) + ":" + arr[counter].head + ":" + UDBM.get_user(arr[counter].assigner_id).login
-                          + ":" + UDBM.get_user(arr[counter].executor_id).login + ":";
+                          + ":" + UDBM.get_user(arr[counter].executor_id).login + ":" + (arr[counter].completion ? "1":"0") + ":";
             }
             result += std::to_string(arr[size - 1].id) + ":" + arr[size - 1].head + ":" + UDBM.get_user(arr[size - 1].assigner_id).login
-                      + ":" + UDBM.get_user(arr[size - 1].executor_id).login;
+                      + ":" + UDBM.get_user(arr[size - 1].executor_id).login + (arr[counter].completion ? "1":"0");
         }
 
         return result;
@@ -80,8 +80,8 @@ private:
         UserDBManager UDBM(DB_conn.session);
         TaskDBManager TDBM(DB_conn.session);
 
-        int i = 0;
-        std::string request, username, head, assigner, executor;
+        int i = 0, task_id = 0;
+        std::string request, username, head, assigner, executor, task_state;
         request = readUntil(':', recieved_, i);
 
         ++i;
@@ -126,6 +126,30 @@ private:
                     CopyFromStringToCharArray(to_send, to_send.size(), sent_);
 
                     send_required = true;
+                }
+            }
+            else {
+                if (request == "edit") {
+                    task_id = std::stoi(readUntil(':', recieved_, i));
+                    ++i;
+                    head = readUntil(':', recieved_, i);
+                    ++i;
+                    assigner = readUntil(':', recieved_, i);
+                    ++i;
+                    executor = readUntil(':', recieved_, i);
+                    ++i;
+                    task_state = readUntil('\r', recieved_, i);
+                    try{
+                        if (task_state == "0") {
+                            TDBM.incomplete_task(task_id);
+                        }
+                        else {
+                            TDBM.complete_task(task_id);
+                        }
+                    }
+                    catch (DB_except) {}
+
+                    send_required = false;
                 }
             }
         }
