@@ -83,7 +83,7 @@ std::vector<Task> Client::TasksFromStr(const std::string &str) {
   }
 
 
-  for (int i = 1; i < strings.size(); i += 4) {
+  for (int i = 1; i < strings.size(); i += 5) {
     Task task;
     task.setId(std::stoi(strings[i]));
 
@@ -131,7 +131,7 @@ std::string Client::AddNewTask(const Task& task) {
   return str;
 }
 std::string Client::EditTask(const Task& task) {
-  std::string done = "";
+  std::string done;
   if (task.getDone()) {
     done = "1";
   }
@@ -166,6 +166,23 @@ bool ClientBoostAsio::Connect() {
 
   return true;
 }
+
+void ClientBoostAsio::Run() {
+  while (true) {
+    std::string answer;
+    while (answer.empty()) {
+      //boost::this_thread::sleep(boost::posix_time::microseconds(2000));
+
+      boost::asio::read_until(socket_message, read_buffer, MESSAGE_END);
+      answer = std::string(std::istreambuf_iterator<char>(is), {});
+    }
+
+    Task task;
+    task.setId(answer[0]);
+    presenter->UpdateMessageForTask(task, Client::MessagesFromStr(answer));
+  }
+}
+
 
 std::string ClientBoostAsio::sendRequestGetAnswer(const std::string& request, tcp::socket& socket) {
   os << request;

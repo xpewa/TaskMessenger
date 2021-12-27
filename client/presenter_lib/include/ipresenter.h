@@ -6,6 +6,8 @@
 #include "task.h"
 #include "message.h"
 
+#include <vector>
+
 class IPresenter {
 public:
   virtual ~IPresenter() = default;
@@ -16,6 +18,8 @@ public:
   virtual void AddNewTask(Task task) = 0;
   virtual void EditTask(Task task) = 0;
   virtual void AddNewMessage(Task task, Message message) = 0;
+
+  virtual void UpdateMessageForTask(Task task, std::vector<Message> messages) = 0;
 };
 
 #endif // TASKMESSENGER_IPRESENTER_H

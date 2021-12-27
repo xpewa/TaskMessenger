@@ -20,6 +20,8 @@ public:
   View();
   ~View() = default;
 
+  Task getTask() override;
+
   void setPresenter(IPresenter* presenter_) override;
 
   void showUserData(const User& user) override;

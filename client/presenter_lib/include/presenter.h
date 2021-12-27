@@ -22,6 +22,8 @@ public:
   void EditTask(Task task) override;
   void AddNewMessage(Task task, Message message) override;
 
+  void UpdateMessageForTask(Task task, std::vector<Message> messages) override;
+
 private:
   std::unique_ptr<IView> view;
   std::unique_ptr<IClient> client;

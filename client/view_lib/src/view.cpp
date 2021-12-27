@@ -91,3 +91,7 @@ void View::onActionUpdate() {
   User user = mainWindow.getUser();
   presenter->GetTaskForUser(user);
 }
+
+Task View::getTask() {
+  return taskDialog.getTask();
+}

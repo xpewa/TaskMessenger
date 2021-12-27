@@ -21,3 +21,9 @@ void Presenter::AddNewMessage(Task task, Message message) {
 void Presenter::EditTask(Task task) {
   client->EditTask(task);
 }
+
+void Presenter::UpdateMessageForTask(Task task, std::vector<Message> messages) {
+  if (task.getId() == view->getTask().getId()) {
+    view->showMessagesData(messages);
+  }
+}
