@@ -225,7 +225,7 @@ void ClientBoostAsio::EditTask(const Task& task) {
   auto request = Client::EditTask(task);
 
   os << request;
-  boost::asio::write(socket_message, write_buffer);
+  boost::asio::write(socket_task, write_buffer);
 }
 
 void ClientBoostAsio::setPresenter(IPresenter* presenter_) { presenter = presenter_; }

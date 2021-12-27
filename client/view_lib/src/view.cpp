@@ -84,6 +84,14 @@ void View::onButtonCreateMessage() {
 void View::onCheckBox() {
   Task task = taskDialog.getTask();
 
+  std::vector<Task> tasks = mainWindow.getTasks();
+  for (int i = 0; i < tasks.size(); ++i) {
+    if (task.getId() == tasks[i].getId()) {
+      tasks[i] = task;
+    }
+  }
+  mainWindow.setTasks(tasks);
+
   presenter->EditTask(task);
 }
 
