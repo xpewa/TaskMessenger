@@ -19,6 +19,8 @@ public:
 
     bool complete_task(int task_id) override;
 
+    bool incomplete_task(int task_id) override;
+
     void drop() override { session.sql("DROP TABLE task;").execute(); }
 };
 
