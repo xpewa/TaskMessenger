@@ -4,11 +4,14 @@
 #include <vector>
 #include <boost/bind/bind.hpp>
 #include <boost/asio.hpp>
+#include <unordered_map>
 #include "UserDBManager.h"
 #include "MessageDBManager.h"
 
 
 using boost::asio::ip::tcp;
+
+std::unordered_map<int, tcp::socket> client_list;
 
 class Connection
 {
@@ -96,11 +99,41 @@ private:
                         std::stoi(from_id));
             MDBM.add_message(msg);
 
+
+            //получить два(одно уже есть) id
+            std::vector<int> users_id = MDBM.get_users_for_task(std::stoi(task_id));
+
+
+            std::vector <Message> messages;
+            messages = MDBM.get_messages_for_task_id(std::stoi(task_id));
+            to_send = "";
+            to_send += std::to_string(messages.size());
+            for (int j = 0; j < messages.size(); ++j)
+                to_send += ":" + messages[j].text + ":" + UDBM.get_user(messages[j].from_id).login ;
+            to_send += "\r\n";
+            CopyFromStringToCharArray(to_send, to_send.size(), sent_);
+
+
+            boost::asio::async_write(client_list[users_id[0]],
+                                     boost::asio::buffer(sent_, to_send.size()),
+                                     boost::bind(&Connection::handle_write, this,
+                                                 boost::asio::placeholders::error));
+
+            boost::asio::async_write(client_list[users_id[1]],
+                                     boost::asio::buffer(sent_, to_send.size()),
+                                     boost::bind(&Connection::handle_write, this,
+                                                 boost::asio::placeholders::error));
+
+
+
+
+
             send_required = false;
         }
         else {
             if (request == "get") {
                 std::vector <Message> messages;
+                from_id = readUntil(':', recieved_, i);
                 task_id = readUntil('\r', recieved_, i);
                 messages = MDBM.get_messages_for_task_id(std::stoi(task_id));
                 to_send = "";
@@ -109,6 +142,10 @@ private:
                     to_send += ":" + messages[j].text + ":" + UDBM.get_user(messages[j].from_id).login ;
                 to_send += "\r\n";
                 CopyFromStringToCharArray(to_send, to_send.size(), sent_);
+
+                client_list.insert(std::make_pair(std::stoi(from_id), &socket_));
+
+
 
                 send_required = true;
             }
