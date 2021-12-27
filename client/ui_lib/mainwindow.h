@@ -32,10 +32,12 @@ public:
 public slots:
     void on_buttonAddTask_clicked();
     void onButtonShowTask_clicked();
+    void on_action_triggered();
 
 signals:
     void onButtonCreateTask();
     void onButtonShowTask(Task &task);
+    void onActionUpdate();
 
 private:
     void addTask(Task& task);

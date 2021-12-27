@@ -7,8 +7,10 @@ View::View() {
   QObject::connect(&mainWindow, &MainWindow::onButtonCreateTask, this, &View::onButtonCreateTask);
   QObject::connect(&taskCreateDialog, &TaskCreateDialog::onButtonCreateTask, this, &View::onButtonAddTask);
   QObject::connect(&mainWindow, &MainWindow::onButtonShowTask, this, &View::onButtonShowTask);
+  QObject::connect(&mainWindow, &MainWindow::onActionUpdate, this, &View::onActionUpdate);
   QObject::connect(&login, &Login::onButtonLogin, this, &View::onButtonLogin);
   QObject::connect(&taskDialog, &TaskDialog::onButtonSendMessage, this, &View::onButtonCreateMessage);
+  QObject::connect(&taskDialog, &TaskDialog::onCheckBox, this, &View::onCheckBox);
 }
 
 void View::setPresenter(IPresenter* presenter_) { presenter = presenter_; }
@@ -63,9 +65,12 @@ void View::onButtonAddTask() {
   Task task = taskCreateDialog.getTask();
 
   taskCreateDialog.close();
-  mainWindow.pushBackTask(task);
-  mainWindow.showTasks();
+  //mainWindow.pushBackTask(task);
+  //mainWindow.showTasks();
   presenter->AddNewTask(task);
+
+  User user = mainWindow.getUser();
+  presenter->GetTaskForUser(user);
 }
 void View::onButtonCreateMessage() {
   Message message = taskDialog.getMessage();
@@ -74,4 +79,15 @@ void View::onButtonCreateMessage() {
   taskDialog.pushBackMessage(message);
   taskDialog.updateMessages();
   presenter->AddNewMessage(task, message);
+}
+
+void View::onCheckBox() {
+  Task task = taskDialog.getTask();
+
+  presenter->EditTask(task);
+}
+
+void View::onActionUpdate() {
+  User user = mainWindow.getUser();
+  presenter->GetTaskForUser(user);
 }

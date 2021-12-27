@@ -14,6 +14,7 @@ public:
   virtual void GetTaskForUser(User user) = 0;
   virtual void GetMessageForTask(Task task) = 0;
   virtual void AddNewTask(Task task) = 0;
+  virtual void EditTask(Task task) = 0;
   virtual void AddNewMessage(Task task, Message message) = 0;
 };
 

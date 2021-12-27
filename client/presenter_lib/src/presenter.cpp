@@ -18,3 +18,6 @@ void Presenter::AddNewTask(Task task) {
 void Presenter::AddNewMessage(Task task, Message message) {
   client->AddNewMessage(task, message);
 }
+void Presenter::EditTask(Task task) {
+  client->EditTask(task);
+}

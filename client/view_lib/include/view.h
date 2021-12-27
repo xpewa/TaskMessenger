@@ -32,6 +32,8 @@ public slots:
   void onButtonCreateTask();
   void onButtonAddTask();
   void onButtonCreateMessage();
+  void onCheckBox();
+  void onActionUpdate();
 
 private:
   IPresenter* presenter;

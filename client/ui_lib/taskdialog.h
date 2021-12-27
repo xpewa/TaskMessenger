@@ -32,10 +32,12 @@ public:
 
 private slots:
     void on_buttonSendMessage_clicked();
+    void on_checkBox_stateChanged(int arg1);
     void addMessage(Message message);
 
 signals:
     void onButtonSendMessage();
+    void onCheckBox();
 
 private:
     Ui::TaskDialog *ui;

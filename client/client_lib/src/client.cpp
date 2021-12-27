@@ -22,6 +22,7 @@ public:
   static std::string GetMessageForTask(const Task& task);
   static std::string GetTaskForUser(const User& user);
   static std::string AddNewTask(const Task& task);
+  static std::string EditTask(const Task& task);
   static std::string AddNewMessage(const Task& task, const Message& message);
 };
 
@@ -96,6 +97,15 @@ std::vector<Task> Client::TasksFromStr(const std::string &str) {
     worker.setName(strings[i+3]);
     task.setWorker(worker);
 
+    int done;
+    done = std::stoi(strings[i+4]);
+    if (done) {
+      task.setDone(true);
+    }
+    else {
+      task.setDone(false);
+    }
+
     tasks.push_back(task);
   }
 
@@ -118,6 +128,20 @@ std::string Client::AddNewTask(const Task& task) {
   std::string str = "add:" + task.getTitle() + ":" +
                   task.getAssigner().getName() + ":" +
                   task.getWorker().getName() + "\r\n";
+  return str;
+}
+std::string Client::EditTask(const Task& task) {
+  std::string done = "";
+  if (task.getDone()) {
+    done = "1";
+  }
+  else {
+    done = "0";
+  }
+  std::string str = "edit:" + task.getTitle() + ":" +
+                    task.getAssigner().getName() + ":" +
+                    task.getWorker().getName() + ":" +
+                    done + "\r\n";
   return str;
 }
 std::string Client::AddNewMessage(const Task& task, const Message& message) {
@@ -178,3 +202,12 @@ void ClientBoostAsio::AddNewMessage(const Task& task, const Message& message) {
   os << request;
   boost::asio::write(socket_message, write_buffer);
 }
+
+void ClientBoostAsio::EditTask(const Task& task) {
+  auto request = Client::EditTask(task);
+
+  os << request;
+  boost::asio::write(socket_message, write_buffer);
+}
+
+void ClientBoostAsio::setPresenter(IPresenter* presenter_) { presenter = presenter_; }
