@@ -6,7 +6,7 @@
 #include <vector>
 #include "tables.h"
 
-
+// переменные подключения
 const std::string HOST = "localhost";
 const int PORT = 33060;
 const std::string USER_NAME = "root";
@@ -23,6 +23,7 @@ public:
     DBConnection();
 };
 
+// исключение, связанное с ограничениями БД
 class DB_except : public std::runtime_error {
 public:
     using std::runtime_error::runtime_error;
