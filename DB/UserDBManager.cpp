@@ -18,8 +18,8 @@ User UserDBManager::get_user(int id) {
     return User(id, res);
 }
 
-User UserDBManager::search_user(std::string name_) {
-    mysqlx::Row row = user.select("id", "login").where("login = :login").bind("login", name_).execute().fetchOne();
+User UserDBManager::search_user(std::string login_) {
+    mysqlx::Row row = user.select("id", "login").where("login = :login").bind("login", login_).execute().fetchOne();
     if(!row) throw DB_except("No user with this login!");
     int id = row[0].get<int>();
     std::string name = row[1].get<std::string>();

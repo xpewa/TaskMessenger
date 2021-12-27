@@ -4,17 +4,19 @@
 #include <vector>
 #include "tables.h"
 
-
+//интерфейс для менеджера задач в БД
 class ITaskDBManager {
 public:
-//    virtual ~ITaskDBManager() = 0;
+//добавление задачи в БД
+    virtual bool add_task(const Task &task) = 0;
 
-    virtual bool add_task(const Task& task) = 0;
-
+//установка флага "выполнено" для задачи
     virtual bool complete_task(int task_id) = 0;
 
+//получение всех задач
     virtual std::vector<Task> get_user_tasks(int id) = 0;
 
+//сброс таблицы (системное)
     virtual void drop() = 0;
 };
 
