@@ -157,6 +157,7 @@
   </property>
   <property name="font">
    <font>
+    <family>Waree</family>
     <pointsize>13</pointsize>
    </font>
   </property>
@@ -181,9 +182,9 @@
    <widget class="QPushButton" name="buttonCreateTask">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>244</y>
-      <width>131</width>
+      <x>90</x>
+      <y>240</y>
+      <width>151</width>
       <height>31</height>
      </rect>
     </property>

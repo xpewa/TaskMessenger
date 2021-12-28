@@ -1,4 +1,44 @@
 #include "view.h"
+#include "ipresenter.h"
+
+class Worker : public QObject {
+  //Q_OBJECT
+
+private:
+  Task task;
+  IPresenter* presenter;
+  QTimer timer;
+
+public:
+  Worker(Task task_, IPresenter* presenter_) : task(task_), presenter(presenter_) {
+    QObject::connect(&timer, &QTimer::timeout, this, &Worker::process);
+    timer.start(500);
+  }
+  ~Worker() = default;
+
+public slots:
+  void process();
+  void stop() {
+    timer.stop();
+  }
+};
+
+void Worker::process() {
+  presenter->GetMessageForTask(task);
+}
+
+void View::addThread(Task task) {
+  Worker* worker = new Worker(task, presenter);
+  QThread* thread = new QThread;
+  worker->moveToThread(thread);
+
+  QObject::connect(thread, &QThread::started, worker, &Worker::process);
+
+  //QObject::connect(&taskDialog, &TaskDialog::rejected, worker, &Worker::stop);
+  QObject::connect(&taskDialog, &TaskDialog::rejected, thread, &QThread::quit);
+
+  thread->start();
+}
 
 
 View::View() {
@@ -47,6 +87,8 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.setMessages(messages);
   taskDialog.updateMessages();
   presenter->GetMessageForTask(task);
+
+  addThread(task);
 
   taskDialog.setModal(true);
   taskDialog.exec();

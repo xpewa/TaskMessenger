@@ -11,6 +11,9 @@
 #include "../../ui_lib/taskdialog.h"
 #include "../../ui_lib/taskcreatedialog.h"
 
+#include <QThread>
+#include <QTimer>
+
 class View : public QObject, public IView
 {
 
@@ -39,6 +42,9 @@ public slots:
 
 private:
   IPresenter* presenter;
+
+  void addThread(Task task);
+
 public:
   Login login;
   MainWindow mainWindow;

@@ -118,6 +118,7 @@ std::string Client::Authorize(const std::string& name) {
 }
 std::string Client::GetMessageForTask(const Task& task) {
   std::string str = "get:" + std::to_string(task.getId()) + "\r\n";
+  //std::string str = "get:" + std::to_string(user.getId()) + std::to_string(task.getId()) + "\r\n";
   return str;
 }
 std::string Client::GetTaskForUser(const User& user) {

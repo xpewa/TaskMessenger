@@ -157,6 +157,7 @@
   </property>
   <property name="font">
    <font>
+    <family>Waree</family>
     <pointsize>14</pointsize>
     <stylestrategy>PreferDefault</stylestrategy>
    </font>
@@ -222,6 +223,7 @@
       </property>
       <property name="font">
        <font>
+        <family>Waree</family>
         <pointsize>15</pointsize>
         <stylestrategy>PreferDefault</stylestrategy>
        </font>
@@ -238,7 +240,7 @@
          <x>10</x>
          <y>30</y>
          <width>181</width>
-         <height>41</height>
+         <height>46</height>
         </rect>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout">
@@ -255,6 +257,7 @@
           </property>
           <property name="font">
            <font>
+            <family>Waree</family>
             <pointsize>18</pointsize>
             <stylestrategy>PreferDefault</stylestrategy>
            </font>
@@ -274,6 +277,7 @@
           </property>
           <property name="font">
            <font>
+            <family>Waree</family>
             <pointsize>17</pointsize>
             <stylestrategy>PreferDefault</stylestrategy>
            </font>
@@ -442,7 +446,7 @@
            <number>0</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>50</number>
+           <number>40</number>
           </attribute>
           <attribute name="verticalHeaderHighlightSections">
            <bool>false</bool>
@@ -540,7 +544,7 @@
      <x>0</x>
      <y>0</y>
      <width>1022</width>
-     <height>27</height>
+     <height>38</height>
     </rect>
    </property>
    <property name="palette">
