@@ -23,11 +23,7 @@ void Presenter::EditTask(Task task) {
 }
 
 void Presenter::UpdateMessageForTask(Task task, std::vector<Message> messages) {
-  //if (task.getId() == view->getTask().getId()) {
+  if (task.getId() == view->getTask().getId()) {
     view->showMessagesData(messages);
-  //}
-}
-
-void Presenter::Run(Task task, bool on) {
-  client->Run(task, on);
+  }
 }

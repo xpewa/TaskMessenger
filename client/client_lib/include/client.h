@@ -13,7 +13,7 @@ public:
   ~ClientBoostAsio() { socket_task.close(); socket_message.close(); }
 
   bool Connect();
-  void Run(const Task& task, bool on);
+  void Run();
 
   void setPresenter(IPresenter* presenter_) override;
 

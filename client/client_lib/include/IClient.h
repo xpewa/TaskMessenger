@@ -19,8 +19,6 @@ public:
   virtual void AddNewTask(const Task& task) = 0;
   virtual void EditTask(const Task& task) = 0;
   virtual void AddNewMessage(const Task& task, const Message& message) = 0;
-
-  virtual void Run(const Task& task, bool on) = 0;
 };
 
 #endif // TASKMESSENGER_ICLIENT_H

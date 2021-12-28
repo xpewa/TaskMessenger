@@ -23,7 +23,6 @@ public:
   void AddNewMessage(Task task, Message message) override;
 
   void UpdateMessageForTask(Task task, std::vector<Message> messages) override;
-  void Run(Task task, bool on) override;
 
 private:
   std::unique_ptr<IView> view;

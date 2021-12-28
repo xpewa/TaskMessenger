@@ -1,4 +1,44 @@
 #include "view.h"
+#include "ipresenter.h"
+
+class Worker : public QObject {
+  //Q_OBJECT
+
+private:
+  Task task;
+  IPresenter* presenter;
+  QTimer timer;
+
+public:
+  Worker(Task task_, IPresenter* presenter_) : task(task_), presenter(presenter_) {
+    QObject::connect(&timer, &QTimer::timeout, this, &Worker::process);
+    timer.start(2000);
+  }
+  ~Worker() = default;
+
+public slots:
+  void process();
+  void stop() {
+    timer.stop();
+  }
+};
+
+void Worker::process() {
+  presenter->GetMessageForTask(task);
+}
+
+void View::addThread(Task task) {
+  Worker* worker = new Worker(task, presenter);
+  QThread* thread = new QThread;
+  worker->moveToThread(thread);
+
+  connect(thread, SIGNAL(started()), worker, SLOT(process()));
+
+  QObject::connect(&taskDialog, &TaskDialog::rejected, thread, &QThread::quit);
+  QObject::connect(&taskDialog, &TaskDialog::rejected, worker, &Worker::stop);
+
+  thread->start();
+}
 
 
 View::View() {
@@ -11,9 +51,6 @@ View::View() {
   QObject::connect(&login, &Login::onButtonLogin, this, &View::onButtonLogin);
   QObject::connect(&taskDialog, &TaskDialog::onButtonSendMessage, this, &View::onButtonCreateMessage);
   QObject::connect(&taskDialog, &TaskDialog::onCheckBox, this, &View::onCheckBox);
-
-  QObject::connect(&taskDialog, &TaskDialog::conn, this, &View::run);
-  //QObject::connect(this, &View::close, &thread2, &QThread::terminate);
 }
 
 void View::setPresenter(IPresenter* presenter_) { presenter = presenter_; }
@@ -50,6 +87,8 @@ void View::onButtonShowTask(Task &task) {
   taskDialog.setMessages(messages);
   taskDialog.updateMessages();
   presenter->GetMessageForTask(task);
+
+  addThread(task);
 
   taskDialog.setModal(true);
   taskDialog.exec();
@@ -105,15 +144,4 @@ void View::onActionUpdate() {
 
 Task View::getTask() {
   return taskDialog.getTask();
-}
-
-void View::run() {
-  thread2.start();
-  thread2.sleep(3);
-  while (taskDialog.isVisible()) {
-    thread2.sleep(1);
-
-    presenter->GetMessageForTask(taskDialog.getTask());
-  }
-  thread2.terminate();
 }

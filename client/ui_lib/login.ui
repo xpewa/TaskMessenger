@@ -157,7 +157,7 @@
   </property>
   <property name="font">
    <font>
-    <family>aakar</family>
+    <family>Waree</family>
     <pointsize>14</pointsize>
     <weight>50</weight>
     <italic>false</italic>
@@ -179,6 +179,15 @@
      <height>221</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Waree</family>
+     <pointsize>14</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
+   </property>
    <property name="focusPolicy">
     <enum>Qt::NoFocus</enum>
    </property>
@@ -194,7 +203,7 @@
       <x>50</x>
       <y>70</y>
       <width>219</width>
-      <height>104</height>
+      <height>122</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">

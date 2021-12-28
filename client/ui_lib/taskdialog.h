@@ -38,7 +38,6 @@ private slots:
 signals:
     void onButtonSendMessage();
     void onCheckBox();
-    void conn();
 
 private:
     Ui::TaskDialog *ui;

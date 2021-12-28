@@ -130,6 +130,7 @@
   </property>
   <property name="font">
    <font>
+    <family>Waree</family>
     <pointsize>14</pointsize>
    </font>
   </property>
@@ -274,6 +275,7 @@
       </property>
       <property name="font">
        <font>
+        <family>Waree</family>
         <pointsize>14</pointsize>
         <weight>75</weight>
         <bold>true</bold>
@@ -310,6 +312,7 @@
       </property>
       <property name="font">
        <font>
+        <family>Waree</family>
         <pointsize>15</pointsize>
        </font>
       </property>

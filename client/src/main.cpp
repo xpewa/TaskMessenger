@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
     if (!client->Connect()) {
       return 11;
     }
+    //std::thread t(&ClientBoostAsio::Run, client.get());
+    //t.detach();
 
     auto presenter = std::make_unique<Presenter>(std::move(view), std::move(client));
 

@@ -118,6 +118,7 @@ std::string Client::Authorize(const std::string& name) {
 }
 std::string Client::GetMessageForTask(const Task& task) {
   std::string str = "get:" + std::to_string(task.getId()) + "\r\n";
+  //std::string str = "get:" + std::to_string(task.getId()) + "\r\n";
   return str;
 }
 std::string Client::GetTaskForUser(const User& user) {
@@ -155,10 +156,10 @@ std::string Client::AddNewMessage(const Task& task, const Message& message) {
 
 bool ClientBoostAsio::Connect() {
   tcp::endpoint ep1(address::from_string(std::string(IP_SERVER)), PORT_SERVER_TASK);
-  tcp::endpoint ep2(address::from_string(std::string(IP_SERVER)), PORT_SERVER_MESSAGE);
+//  tcp::endpoint ep2(address::from_string(std::string(IP_SERVER)), PORT_SERVER_MESSAGE);
   boost::system::error_code error;
   socket_task.connect(ep1, error);
-  socket_message.connect(ep2, error);
+//  socket_message.connect(ep2, error);
   if (error) {
     return false;
   }
@@ -167,11 +168,19 @@ bool ClientBoostAsio::Connect() {
   return true;
 }
 
-void ClientBoostAsio::Run(const Task& task, bool on) {
-  while (on) {
-      boost::this_thread::sleep(boost::posix_time::microseconds(2000));
+void ClientBoostAsio::Run() {
+  while (true) {
+    std::string answer;
+    while (answer.empty()) {
+      //boost::this_thread::sleep(boost::posix_time::microseconds(2000));
 
-      presenter->UpdateMessageForTask(task, GetMessageForTask(task));
+      boost::asio::read_until(socket_message, read_buffer, MESSAGE_END);
+      answer = std::string(std::istreambuf_iterator<char>(is), {});
+    }
+
+    Task task;
+    task.setId(answer[0]);
+    presenter->UpdateMessageForTask(task, Client::MessagesFromStr(answer));
   }
 }
 
