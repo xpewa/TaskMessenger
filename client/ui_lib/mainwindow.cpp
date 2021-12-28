@@ -14,9 +14,9 @@ void MainWindow::addTask(Task& task)
   QTableWidgetItem* worker = new QTableWidgetItem;
 
   if (task.getDone()) {
-    title->setBackground(Qt::blue);
-    assigner->setBackground(Qt::blue);
-    worker->setBackground(Qt::blue);
+    title->setBackground(Qt::darkBlue);
+    assigner->setBackground(Qt::darkBlue);
+    worker->setBackground(Qt::darkBlue);
   }
 
   title->setText(QString::fromStdString(task.getTitle()));

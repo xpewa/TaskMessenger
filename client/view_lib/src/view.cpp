@@ -112,7 +112,8 @@ void View::onButtonAddTask() {
   presenter->AddNewTask(task);
 
   User user = mainWindow.getUser();
-  presenter->GetTaskForUser(user);
+  //presenter->GetTaskForUser(user);
+  showUserData(user);
 }
 void View::onButtonCreateMessage() {
   Message message = taskDialog.getMessage();
