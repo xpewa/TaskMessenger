@@ -12,7 +12,7 @@ private:
 public:
   Worker(Task task_, IPresenter* presenter_) : task(task_), presenter(presenter_) {
     QObject::connect(&timer, &QTimer::timeout, this, &Worker::process);
-    timer.start(2000);
+    timer.start(1000);
   }
   ~Worker() = default;
 
@@ -32,10 +32,11 @@ void View::addThread(Task task) {
   QThread* thread = new QThread;
   worker->moveToThread(thread);
 
-  connect(thread, SIGNAL(started()), worker, SLOT(process()));
+  QObject::connect(thread, &QThread::started, worker, &Worker::process);
+  //connect(thread, SIGNAL(started()), worker, SLOT(process()));
 
-  QObject::connect(&taskDialog, &TaskDialog::rejected, thread, &QThread::quit);
   QObject::connect(&taskDialog, &TaskDialog::rejected, worker, &Worker::stop);
+  //QObject::connect(&taskDialog, &TaskDialog::rejected, thread, &QThread::quit);
 
   thread->start();
 }
