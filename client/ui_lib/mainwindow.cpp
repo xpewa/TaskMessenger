@@ -13,6 +13,12 @@ void MainWindow::addTask(Task& task)
   QTableWidgetItem* assigner = new QTableWidgetItem;
   QTableWidgetItem* worker = new QTableWidgetItem;
 
+  if (task.getDone()) {
+    title->setBackground(Qt::darkBlue);
+    assigner->setBackground(Qt::darkBlue);
+    worker->setBackground(Qt::darkBlue);
+  }
+
   title->setText(QString::fromStdString(task.getTitle()));
   assigner->setText(QString::fromStdString(task.getAssigner().getName()));
   worker->setText(QString::fromStdString(task.getWorker().getName()));
