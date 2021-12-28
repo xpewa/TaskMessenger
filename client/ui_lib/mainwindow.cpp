@@ -17,7 +17,7 @@ void MainWindow::addTask(Task& task)
   assigner->setText(QString::fromStdString(task.getAssigner().getName()));
   worker->setText(QString::fromStdString(task.getWorker().getName()));
   size_t i = open_btn_array.size();
-  open_btn_array.push_back(new QPushButton("+"));
+  open_btn_array.push_back(new QPushButton("..."));
   QObject::connect(open_btn_array[i], &QPushButton::clicked, this, &MainWindow::onButtonShowTask_clicked);
 
   table->setItem(table->rowCount()-1, 0, title);
